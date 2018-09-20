@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { INavGroupProps, INavStyles, INavLink, INavStyleProps } from './Nav.types';
-import { NavLink } from '@uifabric/dashboard/lib/components/Nav/NavLink/NavLink';
-import { NavLinkGroup } from './NavLinkGroup';
-import { getStyles } from './Nav.styles';
+import { INavGroupProps, INavGroupStyles, INavLink, INavGroupStyleProps } from '../Nav.types';
+import { NavLink } from '../NavLink/NavLink';
+import { NavLinkGroup } from '../NavLinkGroup';
+import { getStyles } from './NavGroup.styles';
 import { classNamesFunction } from 'office-ui-fabric-react/lib/Utilities';
 
-const getClassNames = classNamesFunction<INavStyleProps, INavStyles>();
-const classNames = getClassNames(getStyles);
+const getClassNames = classNamesFunction<INavGroupStyleProps, INavGroupStyles>();
 
 export class NavGroup extends React.Component<INavGroupProps, {}> {
   constructor(props: INavGroupProps) {
@@ -27,6 +26,8 @@ export class NavGroup extends React.Component<INavGroupProps, {}> {
   }
 
   private _renderGroupName(groupName: string | undefined, groupIndex: number): React.ReactElement<{}> | null {
+    const classNames = getClassNames(getStyles);
+
     // The default group heading will not show even if it is supplied
     // because it is redundant
     if (!groupName || groupIndex === 0) {

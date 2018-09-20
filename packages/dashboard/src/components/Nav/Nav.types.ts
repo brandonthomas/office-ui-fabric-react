@@ -145,11 +145,6 @@ export interface INavStyleProps {
   hasChildren?: boolean;
 
   /**
-   * has group name
-   */
-  hasGroupName?: boolean;
-
-  /**
    * has child be selected boolean
    */
   isChildLinkSelected?: boolean;
@@ -177,15 +172,6 @@ export interface INavStyles {
   root: IStyle;
   navCollapsed: IStyle;
 
-  /**
-   * Style set for the nav group separator
-   */
-  navGroupDivider: IStyle;
-
-  /**
-   * Style set for the group name in nav group separator
-   */
-  navGroupTitle: IStyle;
   nestedNavLinkCollapsed: IStyle;
 }
 
@@ -227,6 +213,26 @@ export interface INavLinkStyles {
    * Style for navLink icons
    */
   iconWrapper: IStyle;
+}
+
+export interface INavGroupStyleProps {
+  /**
+   * has group name
+   */
+  hasGroupName?: boolean;
+  isNavCollapsed?: boolean;
+}
+
+export interface INavGroupStyles {
+  /**
+   * Style set for the nav group separator
+   */
+  navGroupDivider: IStyle;
+
+  /**
+   * Style set for the group name in nav group separator
+   */
+  navGroupTitle: IStyle;
 }
 
 export interface INavLinkProps extends React.AllHTMLAttributes<HTMLAnchorElement> {
