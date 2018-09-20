@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { INavLinkGroupProps, INavLinkGroupStates, INavLink, INavStyleProps, INavStyles } from './Nav.types';
-import { NavLink } from '@uifabric/dashboard/lib/components/Nav/NavLink/NavLink';
-import { getStyles } from './Nav.styles';
+import { INavLinkGroupProps, INavLinkGroupStates, INavLink, INavLinkGroupStyleProps, INavLinkGroupStyes } from '../Nav.types';
+import { NavLink } from '../NavLink/NavLink';
+import { getStyles } from './NavLinkGroup.styles';
 import { classNamesFunction } from 'office-ui-fabric-react/lib/Utilities';
 import { AnimationClassNames, mergeStyles } from 'office-ui-fabric-react/lib/Styling';
 
-const getClassNames = classNamesFunction<INavStyleProps, INavStyles>();
+const getClassNames = classNamesFunction<INavLinkGroupStyleProps, INavLinkGroupStyes>();
 const classNames = getClassNames(getStyles);
 
 export class NavLinkGroup extends React.Component<INavLinkGroupProps, INavLinkGroupStates> {
@@ -43,7 +43,11 @@ export class NavLinkGroup extends React.Component<INavLinkGroupProps, INavLinkGr
           isExpanded={this.state.isExpanded}
           role="menuitem"
         />
-        <ul className={isExpanded ? mergeStyles(AnimationClassNames.slideDownIn20) : mergeStyles(classNames.nestedNavLinkCollapsed)}>
+        <ul
+          className={
+            isExpanded ? mergeStyles(AnimationClassNames.slideDownIn20, classNames.nestedNavMenu) : mergeStyles(classNames.nestedNavMenu)
+          }
+        >
           {!!link.links
             ? link.links.map((nestedLink: INavLink, linkIndex: number) => {
                 return this._renderNestedLinks(nestedLink, linkIndex);

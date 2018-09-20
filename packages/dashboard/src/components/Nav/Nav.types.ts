@@ -145,16 +145,6 @@ export interface INavStyleProps {
   hasChildren?: boolean;
 
   /**
-   * has child be selected boolean
-   */
-  isChildLinkSelected?: boolean;
-
-  /**
-   * nesting level of the nav item in the nav tree
-   */
-  nestingLevel?: number;
-
-  /**
    * is nav collapsed boolean
    */
   isCollapsed?: boolean;
@@ -213,6 +203,14 @@ export interface INavLinkStyles {
    * Style for navLink icons
    */
   iconWrapper: IStyle;
+}
+
+export interface INavLinkGroupStyleProps {
+  isExpanded?: boolean;
+}
+
+export interface INavLinkGroupStyes {
+  nestedNavMenu: IStyle;
 }
 
 export interface INavGroupStyleProps {
