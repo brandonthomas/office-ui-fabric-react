@@ -100,14 +100,6 @@ export interface INavGroupProps {
   isNavCollapsed?: boolean;
 }
 
-export interface INavLinkGroupProps extends INavLinkProps {
-  link: INavLink;
-  isExpanded: boolean;
-  isNavCollapsed?: boolean;
-  hasNestedMenu?: boolean;
-  hasSelectedNestedLink?: boolean;
-}
-
 export interface INavLinkGroupStates {
   isExpanded: boolean;
   hasSelectedNestedLink?: boolean;
@@ -186,6 +178,21 @@ export interface INavStyles {
   navCollapsed: IStyle;
 
   /**
+   * Style set for the nav group separator
+   */
+  navGroupDivider: IStyle;
+
+  /**
+   * Style set for the group name in nav group separator
+   */
+  navGroupTitle: IStyle;
+  nestedNavLinkCollapsed: IStyle;
+}
+
+export interface INavLinkStyleProps {}
+
+export interface INavLinkStyles {
+  /**
    * Style set for the nav item root
    */
   navItemRoot: IStyle;
@@ -209,17 +216,6 @@ export interface INavStyles {
    * Style set for the name column in the nav item
    */
   navItemText: IStyle;
-
-  /**
-   * Style set for the nav group separator
-   */
-  navGroupDivider: IStyle;
-
-  /**
-   * Style set for the group name in nav group separator
-   */
-  navGroupTitle: IStyle;
-
   /**
    * Style for navLink icons
    */
@@ -283,6 +279,14 @@ export interface INavLinkProps extends React.AllHTMLAttributes<HTMLAnchorElement
   isExpanded?: boolean;
   isSelected?: boolean;
   isNavCollapsed?: boolean;
+}
+
+export interface INavLinkGroupProps extends INavLinkProps {
+  link: INavLink;
+  isExpanded: boolean;
+  isNavCollapsed?: boolean;
+  hasNestedMenu?: boolean;
+  hasSelectedNestedLink?: boolean;
 }
 
 export interface INavLinkStates {

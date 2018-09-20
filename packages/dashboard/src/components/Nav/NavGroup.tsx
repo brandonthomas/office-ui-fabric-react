@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { INavGroupProps, INavStyles, INavLink, INavStyleProps } from './Nav.types';
-import { NavLink } from './NavLink';
+import { NavLink } from '@uifabric/dashboard/lib/components/Nav/NavLink/NavLink';
 import { NavLinkGroup } from './NavLinkGroup';
 import { getStyles } from './Nav.styles';
 import { classNamesFunction } from 'office-ui-fabric-react/lib/Utilities';
@@ -8,7 +8,7 @@ import { classNamesFunction } from 'office-ui-fabric-react/lib/Utilities';
 const getClassNames = classNamesFunction<INavStyleProps, INavStyles>();
 const classNames = getClassNames(getStyles);
 
-class NavigationGroup extends React.Component<INavGroupProps, {}> {
+export class NavGroup extends React.Component<INavGroupProps, {}> {
   constructor(props: INavGroupProps) {
     super(props);
   }
@@ -93,5 +93,3 @@ class NavigationGroup extends React.Component<INavGroupProps, {}> {
     );
   }
 }
-
-export const NavGroup = NavigationGroup;
