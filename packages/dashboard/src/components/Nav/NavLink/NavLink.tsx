@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
-import { INavLinkProps, INavStyleProps, INavLinkStates, INavLinkStyles } from '@uifabric/dashboard/lib/components/Nav/Nav.types';
+import { INavLinkProps, INavLinkStyleProps, INavLinkStates, INavLinkStyles } from '@uifabric/dashboard/lib/components/Nav/Nav.types';
 import { getStyles } from './NavLink.styles';
 import { mergeStyles } from 'office-ui-fabric-react/lib/Styling';
 import { classNamesFunction } from 'office-ui-fabric-react/lib/Utilities';
@@ -9,7 +9,7 @@ import { classNamesFunction } from 'office-ui-fabric-react/lib/Utilities';
  * Represents a composed link in the Nav component.
  */
 
-const getClassNames = classNamesFunction<INavStyleProps, INavLinkStyles>();
+const getClassNames = classNamesFunction<INavLinkStyleProps, INavLinkStyles>();
 
 export class NavLink extends React.Component<INavLinkProps, INavLinkStates> {
   private classNames = getClassNames(getStyles);

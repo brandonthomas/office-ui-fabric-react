@@ -189,7 +189,14 @@ export interface INavStyles {
   nestedNavLinkCollapsed: IStyle;
 }
 
-export interface INavLinkStyleProps {}
+export interface INavLinkStyleProps {
+  hasNestedMenu?: boolean;
+  hasSelectedNestedLink?: boolean;
+  isNested?: boolean;
+  isExpanded?: boolean;
+  isSelected?: boolean;
+  isNavCollapsed?: boolean;
+}
 
 export interface INavLinkStyles {
   /**
@@ -252,26 +259,6 @@ export interface INavLinkProps extends React.AllHTMLAttributes<HTMLAnchorElement
    * Icon name for the icon shown on the left side of the nav link
    */
   primaryIconName?: string;
-
-  /**
-   * Icon name for the icon shown on the right side of the nav link
-   */
-  secondaryIconName?: string;
-
-  /**
-   * CSS class for the text part of the nav link
-   */
-  textClassName?: string;
-
-  /**
-   * CSS class for the icon part of the nav link
-   */
-  iconClassName?: string;
-
-  /**
-   * CSS class for the bar marker part of the nav link
-   */
-  barClassName?: string;
 
   hasNestedMenu?: boolean;
   hasSelectedNestedLink?: boolean;

@@ -1,6 +1,6 @@
 /* tslint:disable */
 import { IStyle, DefaultPalette, FontSizes } from 'office-ui-fabric-react/lib/Styling';
-import { INavStyleProps, INavLinkStyles } from '../Nav.types';
+import { INavLinkStyleProps, INavLinkStyles } from '../Nav.types';
 
 export type INavItemStyle = {
   root?: IStyle;
@@ -20,8 +20,8 @@ const navItemHoverColor = '#CCCCCC';
 const navItemWithChildBgColor = '#CCCCCC';
 const navItemSelectedColor = '#B7B7B7';
 
-export const getStyles = (props: INavStyleProps): INavLinkStyles => {
-  const { isSelected, hasChildren, nestingLevel, isChildLinkSelected } = props;
+export const getStyles = (props: INavLinkStyleProps): INavLinkStyles => {
+  const { isSelected, isNested, hasNestedMenu, hasSelectedNestedLink } = props;
 
   return {
     navItemRoot: {
@@ -34,7 +34,7 @@ export const getStyles = (props: INavStyleProps): INavLinkStyles => {
 
       selectors: {
         ':hover': {
-          backgroundColor: hasChildren ? navItemWithChildBgColor : navItemHoverColor
+          backgroundColor: hasNestedMenu ? navItemWithChildBgColor : navItemHoverColor
         },
         ':active': {
           backgroundColor: navItemSelectedColor
@@ -52,7 +52,7 @@ export const getStyles = (props: INavStyleProps): INavLinkStyles => {
     iconWrapper: {
       position: 'relative',
       display: 'flex',
-      flex: isSelected || isChildLinkSelected ? '0 0 32px' : '0 0 48px',
+      flex: isSelected || hasSelectedNestedLink ? '0 0 32px' : '0 0 48px',
       alignItems: 'center',
       justifyContent: 'center'
     },
@@ -77,13 +77,13 @@ export const getStyles = (props: INavStyleProps): INavLinkStyles => {
     },
     navItemIcon: {
       fontSize: navIconSize,
-      lineHeight: !!nestingLevel && nestingLevel > 0 ? navChildItemHeight : navItemHeight,
+      lineHeight: isNested ? navChildItemHeight : navItemHeight,
       color: DefaultPalette.black
     },
     navItemText: {
       flex: '1 1 auto',
-      lineHeight: !!nestingLevel && nestingLevel > 0 ? navChildItemHeight : navItemHeight,
-      marginLeft: isChildLinkSelected || (!hasChildren && isSelected && !(nestingLevel && nestingLevel > 0)) ? '8px' : '0px',
+      lineHeight: isNested ? navChildItemHeight : navItemHeight,
+      marginLeft: hasSelectedNestedLink || (!hasNestedMenu && isSelected && !isNested) ? '8px' : '0px',
       textOverflow: 'ellipsis',
       overflowX: 'hidden',
       whiteSpace: 'nowrap',
