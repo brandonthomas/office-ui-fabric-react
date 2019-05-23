@@ -21,6 +21,7 @@ export * from './Dialog';
 export * from './Divider';
 export * from './DocumentCard';
 export * from './Dropdown';
+export * from './DualRangeInput';
 export * from './ExtendedPicker';
 export * from './Fabric';
 export * from './Facepile';
