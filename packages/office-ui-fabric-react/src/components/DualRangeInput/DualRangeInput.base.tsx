@@ -1,12 +1,19 @@
 import * as React from 'react';
-import { BaseComponent } from '../../Utilities';
+import { BaseComponent, classNamesFunction } from '../../Utilities';
+import { IDualRangeInputProps, IDualRangeInputStyleProps, IDualRangeInputStyles } from './DualRangeInput.types';
 
-export interface IDualRangeInputProps {}
-export class DualRangeInput extends BaseComponent<IDualRangeInputProps, {}> {
+const getClassNames = classNamesFunction<IDualRangeInputStyleProps, IDualRangeInputStyles>();
+
+export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, {}> {
   public render(): JSX.Element {
+    const { styles, theme, className } = this.props;
+    const classNames = getClassNames(styles, { theme: theme!, className });
     return (
-      <div>
-        <input type="range" />
+      <div className={classNames.root}>
+        <input type="range" className={classNames.startRange} />
+        <div className={classNames.startThumb} />
+        <input type="range" className={classNames.endRange} />
+        <div className={classNames.endThumb} />
       </div>
     );
   }

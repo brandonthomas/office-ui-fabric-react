@@ -1070,6 +1070,15 @@ export class DropdownBase extends React.Component<IDropdownInternalProps, IDropd
     }
 
 // @public (undocumented)
+export const DualRangeInput: React_2.StatelessComponent<IDualRangeInputProps>;
+
+// @public (undocumented)
+export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, {}> {
+    // (undocumented)
+    render(): JSX.Element;
+}
+
+// @public (undocumented)
 export enum ElementType {
     anchor = 1,
     button = 0,
@@ -1280,6 +1289,9 @@ export function getColorFromString(inputColor: string): IColor | undefined;
 
 // @public (undocumented)
 export function getContrastRatio(color1: IColor, color2: IColor): number;
+
+// @public (undocumented)
+export const getDualRangeInputStyles: (props: IDualRangeInputStyleProps) => IDualRangeInputStyles;
 
 // @public
 export function getFullColorString(color: IColor): string;
@@ -4326,6 +4338,36 @@ export interface IDropHintDetails {
     originX: number;
     // (undocumented)
     startX: number;
+}
+
+// @public (undocumented)
+export interface IDualRangeInputProps extends IBaseProps {
+    className?: string;
+    // (undocumented)
+    styles?: IStyleFunctionOrObject<IDualRangeInputStyleProps, IDualRangeInputStyles>;
+    // (undocumented)
+    theme?: ITheme;
+}
+
+// @public (undocumented)
+export interface IDualRangeInputStyleProps {
+    className?: string;
+    // (undocumented)
+    theme: ITheme;
+}
+
+// @public (undocumented)
+export interface IDualRangeInputStyles {
+    // (undocumented)
+    endRange: IStyle;
+    // (undocumented)
+    endThumb: IStyle;
+    // (undocumented)
+    root: IStyle;
+    // (undocumented)
+    startRange: IStyle;
+    // (undocumented)
+    startThumb: IStyle;
 }
 
 // @public

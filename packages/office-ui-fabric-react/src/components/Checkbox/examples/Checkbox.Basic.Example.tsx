@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox';
-import { DualRangeInput } from 'office-ui-fabric-react';
 
 export interface ICheckboxBasicExampleState {
   isChecked: boolean;
@@ -17,7 +16,6 @@ export class CheckboxBasicExample extends React.Component<{}, ICheckboxBasicExam
     return (
       <div>
         <Checkbox label="Standard checkbox" onChange={this._onCheckboxChange} />
-        <DualRangeInput />
       </div>
     );
   }
