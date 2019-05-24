@@ -12,6 +12,7 @@ export const getDualRangeInputStyles = (props: IDualRangeInputStyleProps): IDual
     startContainer: {},
     startRange: {
       position: 'absolute',
+      pointerEvents: 'none',
       left: 0,
       opacity: 0.2,
       selectors: {

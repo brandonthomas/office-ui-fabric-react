@@ -41,6 +41,7 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
             type="range"
             className={classNames.startRange}
             onInput={this._onInput}
+            onChange={this._onInput}
             ref={this._setStartRef}
           />
           <div className={classNames.startThumb} />
@@ -53,6 +54,7 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
             type="range"
             className={classNames.endRange}
             onInput={this._onInput}
+            onChange={this._onInput}
             ref={this._setEndRef}
           />
           <div className={classNames.endThumb} />
