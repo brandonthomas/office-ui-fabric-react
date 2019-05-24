@@ -16,10 +16,10 @@ export const getDualRangeInputStyles = (props: IDualRangeInputStyleProps): IDual
       left: 0,
       opacity: 0.2,
       selectors: {
-        '&:focus + $startThumb': { background: 'green' }
+        '&:focus + $startThumb:after': { display: 'block' }
       }
     },
-    startThumb: [getFocusStyle(theme), { width: 20, height: 20 }],
+    startThumb: [getFocusStyle(theme, { isFocusedOnly: false }), { width: 20, height: 20, selectors: { '::after': { display: 'none' } } }],
     endContainer: {},
     endRange: {
       position: 'absolute',
@@ -27,9 +27,9 @@ export const getDualRangeInputStyles = (props: IDualRangeInputStyleProps): IDual
       left: 0,
       opacity: 0.2,
       selectors: {
-        '&:focus + $endThumb': [getFocusStyle(theme), { background: 'transparent' }, { border: '1px solid black' }]
+        '&:focus + $endThumb:after': { display: 'block' }
       }
     },
-    endThumb: { width: 20, height: 20 }
+    endThumb: [getFocusStyle(theme, { isFocusedOnly: false }), { width: 20, height: 20, selectors: { '::after': { display: 'none' } } }]
   };
 };
