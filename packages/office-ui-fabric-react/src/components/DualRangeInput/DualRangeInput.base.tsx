@@ -5,10 +5,6 @@ import { IDualRangeInputProps, IDualRangeInputStyleProps, IDualRangeInputStyles,
 const getClassNames = classNamesFunction<IDualRangeInputStyleProps, IDualRangeInputStyles>();
 
 export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDualRangeInputState> {
-  public static defaultProps: Partial<IDualRangeInputProps> = {
-    min: 0,
-    max: 100
-  };
   private _startRef: HTMLInputElement;
   private _endRef: HTMLInputElement;
   public constructor(props: IDualRangeInputProps) {
@@ -23,9 +19,11 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
     this._onInput = this._onInput.bind(this);
   }
   public render(): JSX.Element {
-    const { styles, theme, className, min, max } = this.props;
+    const { styles, theme, className, min = 0, max = 100 } = this.props;
     const { startValue, endValue } = this.state;
     const classNames = getClassNames(styles, { theme: theme!, className });
+    const percStart = (startValue - min) / (max - min);
+    const percEnd = (endValue - min) / (max - min);
     return (
       // on mouse down we'll detect the rect of each section
       // on mouse down/move we'll calculate the position within the range and apply it (without clamps)
@@ -44,7 +42,7 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
             onChange={this._onInput}
             ref={this._setStartRef}
           />
-          <div className={classNames.startThumb} />
+          <div className={classNames.startThumb}>{percStart}</div>
         </div>
         <div className={classNames.endContainer}>
           <input
@@ -57,7 +55,7 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
             onChange={this._onInput}
             ref={this._setEndRef}
           />
-          <div className={classNames.endThumb} />
+          <div className={classNames.endThumb}>{percEnd}</div>
         </div>
       </div>
     );
@@ -74,25 +72,22 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
   private _onInput(event: React.FormEvent<HTMLInputElement>): void {
     const target = event.target as HTMLInputElement;
     const { startValue, endValue } = this.state;
+    const stateUpdated = () => {
+      if (this.props.onInput) {
+        this.props.onInput(this.state.startValue, this.state.endValue);
+      }
+    };
     if (this._startRef === target) {
       if (+target.value > endValue) {
         target.value = endValue.toString();
       }
-      this.setState({ startValue: +target.value }, () => {
-        if (this.props.onInput) {
-          this.props.onInput(this.state.startValue, this.state.endValue);
-        }
-      });
+      this.setState({ startValue: +target.value }, stateUpdated);
     }
     if (this._endRef === target) {
       if (+target.value < startValue) {
         target.value = startValue.toString();
       }
-      this.setState({ endValue: +target.value }, () => {
-        if (this.props.onInput) {
-          this.props.onInput(this.state.startValue, this.state.endValue);
-        }
-      });
+      this.setState({ endValue: +target.value }, stateUpdated);
     }
   }
 }

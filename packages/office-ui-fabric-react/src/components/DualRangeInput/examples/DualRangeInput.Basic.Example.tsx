@@ -14,8 +14,8 @@ export class DualRangeInputExample extends React.Component<{}, { startValue: num
   public render(): JSX.Element {
     return (
       <div>
-        <DualRangeInput onInput={this._onInput} />
-        {this.state.startValue} - {this.state.endValue}
+        <DualRangeInput onInput={this._onInput} min={-20} max={0} />
+        {this.state.startValue} || {this.state.endValue}
       </div>
     );
   }
