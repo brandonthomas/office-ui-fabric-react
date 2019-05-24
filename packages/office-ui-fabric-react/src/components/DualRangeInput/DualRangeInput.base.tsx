@@ -91,7 +91,10 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
     }
   }
 }
-/*const div = document.getElementById("test");
+/*
+can test IE11 support typeof window.Event === 'function'
+
+const div = document.getElementById("test");
 const input = document.getElementById("input");
 
 div.onmousedown = ()=> {
