@@ -1,5 +1,5 @@
 import { IStyle, ITheme } from '../../Styling';
-import { IBaseProps, IStyleFunctionOrObject } from '../../Utilities';
+import { IBaseProps, IStyleFunctionOrObject, IRenderFunction } from '../../Utilities';
 
 export interface IDualRangeInputProps extends IBaseProps {
   min?: number;
@@ -14,6 +14,10 @@ export interface IDualRangeInputProps extends IBaseProps {
    */
   className?: string;
   onInput?: (startValue: number, endValue: number) => void;
+
+  onRenderTrack?: IRenderFunction<IDualRangeInputProps>;
+  onRenderStartThumb?: IRenderFunction<IDualRangeInputProps>;
+  onRenderEndThumb?: IRenderFunction<IDualRangeInputProps>;
 }
 
 export interface IDualRangeInputState {
@@ -23,12 +27,15 @@ export interface IDualRangeInputState {
 
 export interface IDualRangeInputStyles {
   root: IStyle;
+  startDeadSpace: IStyle;
   startContainer: IStyle;
   startRange: IStyle;
   startThumb: IStyle;
+  filler: IStyle;
   endContainer: IStyle;
   endRange: IStyle;
   endThumb: IStyle;
+  endDeadSpace: IStyle;
 }
 
 export interface IDualRangeInputStyleProps {

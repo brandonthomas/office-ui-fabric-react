@@ -31,6 +31,7 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
       // detect IE11 event support typeof window.Event === "function"
       // polyfill with OG way if it doesn't work
       <div className={classNames.root}>
+        <div className={classNames.startDeadSpace} style={{ flex: `0 0 ${percStart * 100}%` }} />
         <div className={classNames.startContainer}>
           <input
             min={min}
@@ -44,6 +45,7 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
           />
           <div className={classNames.startThumb}>{percStart}</div>
         </div>
+        <div className={classNames.filler} />
         <div className={classNames.endContainer}>
           <input
             min={min}
@@ -57,6 +59,7 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
           />
           <div className={classNames.endThumb}>{percEnd}</div>
         </div>
+        <div className={classNames.endDeadSpace} style={{ flex: `0 0 ${(1 - percEnd) * 100}%` }} />
       </div>
     );
   }

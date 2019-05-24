@@ -9,7 +9,8 @@ export const getDualRangeInputStyles = (props: IDualRangeInputStyleProps): IDual
       // class name should always be last
       className
     ],
-    startContainer: {},
+    startDeadSpace: { backgroundColor: 'grey' },
+    startContainer: { flex: '0 0 0px', maxWidth: 0 },
     startRange: {
       position: 'absolute',
       pointerEvents: 'none',
@@ -20,7 +21,8 @@ export const getDualRangeInputStyles = (props: IDualRangeInputStyleProps): IDual
       }
     },
     startThumb: [getFocusStyle(theme, { isFocusedOnly: false }), { width: 20, height: 20, selectors: { '::after': { display: 'none' } } }],
-    endContainer: {},
+    filler: { flex: '1 1 auto', backgroundColor: theme.semanticColors.accentButtonBackground },
+    endContainer: { flex: '0 0 0px', maxWidth: 0 },
     endRange: {
       position: 'absolute',
       pointerEvents: 'none',
@@ -30,6 +32,7 @@ export const getDualRangeInputStyles = (props: IDualRangeInputStyleProps): IDual
         '&:focus + $endThumb:after': { display: 'block' }
       }
     },
-    endThumb: [getFocusStyle(theme, { isFocusedOnly: false }), { width: 20, height: 20, selectors: { '::after': { display: 'none' } } }]
+    endThumb: [getFocusStyle(theme, { isFocusedOnly: false }), { width: 20, height: 20, selectors: { '::after': { display: 'none' } } }],
+    endDeadSpace: { backgroundColor: 'grey' }
   };
 };
