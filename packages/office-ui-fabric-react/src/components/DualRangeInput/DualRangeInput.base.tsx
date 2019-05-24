@@ -91,3 +91,22 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
     }
   }
 }
+/*const div = document.getElementById("test");
+const input = document.getElementById("input");
+
+div.onmousedown = ()=> {
+  // Create the event.
+var event = document.createEvent('Event');
+
+// Define that the event name is 'build'.
+event.initEvent('change', true, true);
+  input.value = 10;
+  input.dispatchEvent(event);
+}
+input.onchange = (thing)=>{
+  console.log(typeof thing.target.value);
+  if(thing.target.value < 20)
+    {
+      thing.target.value = 20;
+    }
+}*/
