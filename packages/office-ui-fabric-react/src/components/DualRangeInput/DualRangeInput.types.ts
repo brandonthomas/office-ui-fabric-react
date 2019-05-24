@@ -13,9 +13,11 @@ export interface IDualRangeInputProps extends IBaseProps {
 
 export interface IDualRangeInputStyles {
   root: IStyle;
+  startContainer: IStyle;
   startRange: IStyle;
-  endRange: IStyle;
   startThumb: IStyle;
+  endContainer: IStyle;
+  endRange: IStyle;
   endThumb: IStyle;
 }
 

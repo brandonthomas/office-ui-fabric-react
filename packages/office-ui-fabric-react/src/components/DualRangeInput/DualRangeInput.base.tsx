@@ -10,11 +10,19 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, {}> 
     const classNames = getClassNames(styles, { theme: theme!, className });
     return (
       <div className={classNames.root}>
-        <input type="range" className={classNames.startRange} />
-        <div className={classNames.startThumb} />
-        <input type="range" className={classNames.endRange} />
-        <div className={classNames.endThumb} />
+        <div className={classNames.startContainer}>
+          <input type="range" className={classNames.startRange} onInput={this._onStartInput} />
+          <div className={classNames.startThumb} />
+        </div>
+        <div className={classNames.endContainer}>
+          <input type="range" className={classNames.endRange} />
+          <div className={classNames.endThumb} />
+        </div>
       </div>
     );
+  }
+
+  private _onStartInput(event: React.FormEvent<HTMLInputElement>): void {
+    console.log((event.target as HTMLInputElement).value);
   }
 }

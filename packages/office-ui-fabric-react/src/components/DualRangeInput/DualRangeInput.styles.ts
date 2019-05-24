@@ -5,10 +5,11 @@ export const getDualRangeInputStyles = (props: IDualRangeInputStyleProps): IDual
   const { theme, className } = props;
   return {
     root: [
-      {},
+      { display: 'flex' },
       // class name should always be last
       className
     ],
+    startContainer: { position: 'relative' },
     startRange: {
       position: 'absolute',
       opacity: 0,
@@ -16,6 +17,8 @@ export const getDualRangeInputStyles = (props: IDualRangeInputStyleProps): IDual
         '&:focus + $startThumb': { background: 'green' }
       }
     },
+    startThumb: [getFocusStyle(theme), { width: 20, height: 20 }],
+    endContainer: { position: 'relative' },
     endRange: {
       position: 'absolute',
       opacity: 0,
@@ -23,7 +26,6 @@ export const getDualRangeInputStyles = (props: IDualRangeInputStyleProps): IDual
         '&:focus + $endThumb': [getFocusStyle(theme), { background: 'transparent' }, { border: '1px solid black' }]
       }
     },
-    startThumb: [getFocusStyle(theme), { width: 20, height: 20 }],
     endThumb: { width: 20, height: 20 }
   };
 };
