@@ -5,81 +5,100 @@ exports[`Component Examples renders DualRangeInput.Basic.Example.tsx correctly 1
   <div
     className=
 
-
+        {
+          display: flex;
+        }
   >
-    <input
-      className=
-
-          {
-            opacity: 0;
-            position: absolute;
-          }
-          &:focus + $startThumb {
-            background: green;
-          }
-      type="range"
-    />
     <div
       className=
 
           {
-            height: 20px;
-            outline: transparent;
             position: relative;
-            width: 20px;
           }
-          &::-moz-focus-inner {
-            border: 0;
-          }
-          .ms-Fabric--isFocusVisible &:focus:after {
-            border: 1px solid #ffffff;
-            bottom: 1px;
-            content: "";
-            left: 1px;
-            outline: 1px solid #666666;
-            position: absolute;
-            right: 1px;
-            top: 1px;
-            z-index: 1;
-          }
-    />
-    <input
-      className=
+    >
+      <input
+        className=
 
-          {
-            opacity: 0;
-            position: absolute;
-          }
-          &:focus + $endThumb {
-            background: transparent;
-            border: 1px solid black;
-            outline: transparent;
-            position: relative;
-          }
-          &:focus + $endThumb::-moz-focus-inner {
-            border: 0;
-          }
-          .ms-Fabric--isFocusVisible &:focus:after {
-            border: 1px solid #ffffff;
-            bottom: 1px;
-            content: "";
-            left: 1px;
-            outline: 1px solid #666666;
-            position: absolute;
-            right: 1px;
-            top: 1px;
-            z-index: 1;
-          }
-      type="range"
-    />
+            {
+              opacity: 0;
+              position: absolute;
+            }
+            &:focus + $startThumb {
+              background: green;
+            }
+        onInput={[Function]}
+        type="range"
+      />
+      <div
+        className=
+
+            {
+              height: 20px;
+              outline: transparent;
+              position: relative;
+              width: 20px;
+            }
+            &::-moz-focus-inner {
+              border: 0;
+            }
+            .ms-Fabric--isFocusVisible &:focus:after {
+              border: 1px solid #ffffff;
+              bottom: 1px;
+              content: "";
+              left: 1px;
+              outline: 1px solid #666666;
+              position: absolute;
+              right: 1px;
+              top: 1px;
+              z-index: 1;
+            }
+      />
+    </div>
     <div
       className=
 
           {
-            height: 20px;
-            width: 20px;
+            position: relative;
           }
-    />
+    >
+      <input
+        className=
+
+            {
+              opacity: 0;
+              position: absolute;
+            }
+            &:focus + $endThumb {
+              background: transparent;
+              border: 1px solid black;
+              outline: transparent;
+              position: relative;
+            }
+            &:focus + $endThumb::-moz-focus-inner {
+              border: 0;
+            }
+            .ms-Fabric--isFocusVisible &:focus:after {
+              border: 1px solid #ffffff;
+              bottom: 1px;
+              content: "";
+              left: 1px;
+              outline: 1px solid #666666;
+              position: absolute;
+              right: 1px;
+              top: 1px;
+              z-index: 1;
+            }
+        type="range"
+      />
+      <div
+        className=
+
+            {
+              height: 20px;
+              width: 20px;
+            }
+      />
+    </div>
   </div>
 </div>
 `;

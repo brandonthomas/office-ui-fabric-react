@@ -2,6 +2,10 @@ import { IStyle, ITheme } from '../../Styling';
 import { IBaseProps, IStyleFunctionOrObject } from '../../Utilities';
 
 export interface IDualRangeInputProps extends IBaseProps {
+  min?: number;
+  max?: number;
+  startValue?: number;
+  endValue?: number;
   theme?: ITheme;
   styles?: IStyleFunctionOrObject<IDualRangeInputStyleProps, IDualRangeInputStyles>;
 
@@ -9,6 +13,12 @@ export interface IDualRangeInputProps extends IBaseProps {
    * Additional class name to provide on the root element, in addition to the ms-Checkbox class.
    */
   className?: string;
+  onInput?: (startValue: number, endValue: number) => void;
+}
+
+export interface IDualRangeInputState {
+  startValue: number;
+  endValue: number;
 }
 
 export interface IDualRangeInputStyles {
