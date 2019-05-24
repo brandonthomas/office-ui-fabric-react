@@ -42,6 +42,12 @@ export const AppDefinition: IAppDefinition = {
     {
       links: [
         {
+          component: require<any>('./components/pages/DualRangeInputPage').DualRangeInputPage,
+          key: 'DualRangeInput',
+          name: 'DualRangeInput',
+          url: '#/examples/dualrangeinput'
+        },
+        {
           component: require<any>('./components/pages/ActivityItemPage').ActivityItemPage,
           key: 'ActivityItem',
           name: 'ActivityItem',
