@@ -20,11 +20,6 @@ export interface IDualRangeInputProps extends IBaseProps {
   onRenderEndThumb?: IRenderFunction<IDualRangeInputProps>;
 }
 
-export interface IDualRangeInputState {
-  startValue: number;
-  endValue: number;
-}
-
 export interface IDualRangeInputStyles {
   root: IStyle;
   startDeadSpace: IStyle;

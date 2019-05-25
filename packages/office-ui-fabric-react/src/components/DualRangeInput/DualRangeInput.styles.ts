@@ -9,7 +9,7 @@ export const getDualRangeInputStyles = (props: IDualRangeInputStyleProps): IDual
       // class name should always be last
       className
     ],
-    startDeadSpace: { backgroundColor: 'grey' },
+    startDeadSpace: { backgroundColor: 'grey', transition: 'flex-basis 500ms ease-in-out' },
     startContainer: { flex: '0 0 0px', maxWidth: 0 },
     startRange: {
       position: 'absolute',
@@ -32,7 +32,10 @@ export const getDualRangeInputStyles = (props: IDualRangeInputStyleProps): IDual
         '&:focus + $endThumb:after': { display: 'block' }
       }
     },
-    endThumb: [getFocusStyle(theme, { isFocusedOnly: false }), { width: 20, height: 20, selectors: { '::after': { display: 'none' } } }],
-    endDeadSpace: { backgroundColor: 'grey' }
+    endThumb: [
+      getFocusStyle(theme, { isFocusedOnly: false }),
+      { width: 20, height: 20, transition: 'flex-basis 500ms ease-in-out', selectors: { '::after': { display: 'none' } } }
+    ],
+    endDeadSpace: { backgroundColor: 'grey', transition: 'flex-basis 500ms ease-in-out' }
   };
 };
