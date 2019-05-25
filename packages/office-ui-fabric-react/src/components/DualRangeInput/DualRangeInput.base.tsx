@@ -17,6 +17,9 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps> {
   private _endDeadspaceRef: HTMLDivElement;
   private _startValue: number;
   private _endValue: number;
+  private _interactTarget: HTMLInputElement;
+  private _startPerc: number;
+  private _endPerc: number;
   public constructor(props: IDualRangeInputProps) {
     super(props);
     this._startValue = props.startValue!;
@@ -27,6 +30,7 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps> {
     this._setStartDeadspaceRef = this._setStartDeadspaceRef.bind(this);
     this._setEndDeadspaceRef = this._setEndDeadspaceRef.bind(this);
     this._onMouseDown = this._onMouseDown.bind(this);
+    this._onMouseMove = this._onMouseMove.bind(this);
     this._onMouseUp = this._onMouseUp.bind(this);
   }
 
@@ -39,7 +43,7 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps> {
       // _onInput will manage the clamping since we'll change the value and fire the change event
       // detect IE11 event support typeof window.Event === "function"
       // polyfill with OG way if it doesn't work
-      <div className={classNames.root} onMouseDown={this._onMouseDown} onMouseUp={this._onMouseUp}>
+      <div className={classNames.root} onMouseDown={this._onMouseDown}>
         <div className={classNames.startDeadSpace} ref={this._setStartDeadspaceRef} />
         <div className={classNames.startContainer}>
           <input
@@ -120,10 +124,10 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps> {
 
   private _updateVisuals(): void {
     const { min, max } = this.props;
-    const percStart = (this._startValue - min!) / (max! - min!);
-    const percEnd = (this._endValue - min!) / (max! - min!);
-    this._startDeadspaceRef.style.flexBasis = `${percStart * 100}%`;
-    this._endDeadspaceRef.style.flexBasis = `${(1 - percEnd) * 100}%`;
+    this._startPerc = (this._startValue - min!) / (max! - min!);
+    this._endPerc = (this._endValue - min!) / (max! - min!);
+    this._startDeadspaceRef.style.flexBasis = `${this._startPerc * 100}%`;
+    this._endDeadspaceRef.style.flexBasis = `${(1 - this._endPerc) * 100}%`;
   }
 
   private _directInputHandler(e: Event): void {
@@ -131,7 +135,14 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps> {
   }
 
   private _onMouseDown(event: React.MouseEvent<HTMLElement>): void {
-    this._startRef.addEventListener('change', this._directInputHandler.bind(this));
+    const { min, max } = this.props;
+    const rect = (event.currentTarget as HTMLInputElement).getBoundingClientRect();
+    const perc = (event.clientX - rect.left) / rect.width;
+    this._interactTarget = perc <= this._startPerc ? this._startRef : this._endRef;
+
+    event.currentTarget.addEventListener('mousemove', this._onMouseMove);
+    event.currentTarget.addEventListener('mouseup', this._onMouseUp);
+    this._interactTarget.addEventListener('change', this._directInputHandler.bind(this));
     // Event constructor supported so use it
     let syntheticEvent;
     if (typeof Event === 'function') {
@@ -142,11 +153,34 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps> {
       syntheticEvent.initEvent('change', true, true);
     }
 
-    this._startRef.value = String(10);
-    this._startRef.dispatchEvent(syntheticEvent);
+    const newValue = (max! - min!) * perc + min!;
+    this._interactTarget.value = String(newValue);
+    this._interactTarget.dispatchEvent(syntheticEvent);
   }
 
-  private _onMouseUp(event: React.MouseEvent<HTMLElement>): void {
-    this._startRef.removeEventListener('change', this._directInputHandler);
+  private _onMouseMove(event: MouseEvent): void {
+    const { min, max } = this.props;
+    const rect = (event.currentTarget as HTMLInputElement).getBoundingClientRect();
+    const perc = (event.clientX - rect.left) / rect.width;
+
+    // Event constructor supported so use it
+    let syntheticEvent;
+    if (typeof Event === 'function') {
+      syntheticEvent = new Event('change');
+    } else {
+      syntheticEvent = document.createEvent('Event');
+      // ie11 only supports change events on range input so use that
+      syntheticEvent.initEvent('change', true, true);
+    }
+
+    const newValue = (max! - min!) * perc + min!;
+    this._interactTarget.value = String(newValue);
+    this._interactTarget.dispatchEvent(syntheticEvent);
+  }
+
+  private _onMouseUp(event: MouseEvent): void {
+    this._interactTarget.removeEventListener('change', this._directInputHandler);
+    event.currentTarget!.removeEventListener('mouseup', this._onMouseUp);
+    event.currentTarget!.removeEventListener('mousemove', this._onMouseMove);
   }
 }
