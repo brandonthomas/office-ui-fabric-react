@@ -20,6 +20,7 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps> {
   private _interactTarget: HTMLInputElement;
   private _startPerc: number;
   private _endPerc: number;
+  private _targetRect: DOMRect | ClientRect;
   public constructor(props: IDualRangeInputProps) {
     super(props);
     this._startValue = props.startValue!;
@@ -136,8 +137,8 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps> {
 
   private _onMouseDown(event: React.MouseEvent<HTMLElement>): void {
     const { min, max } = this.props;
-    const rect = (event.currentTarget as HTMLInputElement).getBoundingClientRect();
-    const perc = (event.clientX - rect.left) / rect.width;
+    this._targetRect = (event.currentTarget as HTMLInputElement).getBoundingClientRect();
+    const perc = (event.clientX - this._targetRect.left) / this._targetRect.width;
     this._interactTarget = perc <= this._startPerc ? this._startRef : this._endRef;
 
     event.currentTarget.addEventListener('mousemove', this._onMouseMove);
@@ -160,8 +161,7 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps> {
 
   private _onMouseMove(event: MouseEvent): void {
     const { min, max } = this.props;
-    const rect = (event.currentTarget as HTMLInputElement).getBoundingClientRect();
-    const perc = (event.clientX - rect.left) / rect.width;
+    const perc = (event.clientX - this._targetRect.left) / this._targetRect.width;
 
     // Event constructor supported so use it
     let syntheticEvent;
