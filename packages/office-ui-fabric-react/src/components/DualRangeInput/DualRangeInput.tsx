@@ -7,4 +7,4 @@ export const DualRangeInput: React.StatelessComponent<IDualRangeInputProps> = st
   IDualRangeInputProps,
   IDualRangeInputStyleProps,
   IDualRangeInputStyles
->(DualRangeInputBase, getDualRangeInputStyles);
+>(DualRangeInputBase, getDualRangeInputStyles, undefined, undefined, true);

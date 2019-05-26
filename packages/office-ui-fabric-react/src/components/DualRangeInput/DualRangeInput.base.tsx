@@ -1,10 +1,12 @@
 import * as React from 'react';
-import { BaseComponent, classNamesFunction } from '../../Utilities';
-import { IDualRangeInputProps, IDualRangeInputStyleProps, IDualRangeInputStyles } from './DualRangeInput.types';
+import { BaseComponent, classNamesFunction, IPoint } from '../../Utilities';
+import { IDualRangeInputProps, IDualRangeInputStyleProps, IDualRangeInputStyles, IDualRangeInputState } from './DualRangeInput.types';
 
 const getClassNames = classNamesFunction<IDualRangeInputStyleProps, IDualRangeInputStyles>();
 
-export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps> {
+const dragDelta: number = 10;
+
+export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDualRangeInputState> {
   public static defaultProps: Partial<IDualRangeInputProps> = {
     min: 0,
     max: 100,
@@ -21,8 +23,13 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps> {
   private _startPerc: number;
   private _endPerc: number;
   private _targetRect: DOMRect | ClientRect;
+  private _rafRef: number;
+  private _mouseDownOrigin: IPoint;
   public constructor(props: IDualRangeInputProps) {
     super(props);
+    this.state = {
+      enableTransitions: true
+    };
     this._startValue = props.startValue!;
     this._endValue = props.endValue!;
     this._setStartRef = this._setStartRef.bind(this);
@@ -33,17 +40,13 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps> {
     this._onMouseDown = this._onMouseDown.bind(this);
     this._onMouseMove = this._onMouseMove.bind(this);
     this._onMouseUp = this._onMouseUp.bind(this);
+    this._directInputHandler = this._directInputHandler.bind(this);
   }
 
   public render(): JSX.Element {
     const { styles, theme, className, min, max, startValue, endValue } = this.props;
-    const classNames = getClassNames(styles, { theme: theme!, className });
+    const classNames = getClassNames(styles, { theme: theme!, className, enableTransitions: this.state.enableTransitions });
     return (
-      // on mouse down we'll detect the rect of each section
-      // on mouse down/move we'll calculate the position within the range and apply it (without clamps)
-      // _onInput will manage the clamping since we'll change the value and fire the change event
-      // detect IE11 event support typeof window.Event === "function"
-      // polyfill with OG way if it doesn't work
       <div className={classNames.root} onMouseDown={this._onMouseDown}>
         <div className={classNames.startDeadSpace} ref={this._setStartDeadspaceRef} />
         <div className={classNames.startContainer}>
@@ -138,12 +141,13 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps> {
   private _onMouseDown(event: React.MouseEvent<HTMLElement>): void {
     const { min, max } = this.props;
     this._targetRect = (event.currentTarget as HTMLInputElement).getBoundingClientRect();
+    this._mouseDownOrigin = { x: event.clientX, y: event.clientY };
     const perc = (event.clientX - this._targetRect.left) / this._targetRect.width;
     this._interactTarget = perc <= this._startPerc ? this._startRef : this._endRef;
 
-    event.currentTarget.addEventListener('mousemove', this._onMouseMove);
-    event.currentTarget.addEventListener('mouseup', this._onMouseUp);
-    this._interactTarget.addEventListener('change', this._directInputHandler.bind(this));
+    window.addEventListener('mousemove', this._onMouseMove);
+    window.addEventListener('mouseup', this._onMouseUp);
+    this._interactTarget.addEventListener('change', this._directInputHandler);
     // Event constructor supported so use it
     let syntheticEvent;
     if (typeof Event === 'function') {
@@ -160,27 +164,40 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps> {
   }
 
   private _onMouseMove(event: MouseEvent): void {
-    const { min, max } = this.props;
-    const perc = (event.clientX - this._targetRect.left) / this._targetRect.width;
-
-    // Event constructor supported so use it
-    let syntheticEvent;
-    if (typeof Event === 'function') {
-      syntheticEvent = new Event('change');
-    } else {
-      syntheticEvent = document.createEvent('Event');
-      // ie11 only supports change events on range input so use that
-      syntheticEvent.initEvent('change', true, true);
+    // detect a reasonable distance has been moved with mouse and turn off transitions
+    if (
+      (Math.abs(event.clientX - this._mouseDownOrigin.x) > dragDelta || Math.abs(event.clientY - this._mouseDownOrigin.y) > dragDelta) &&
+      this.state.enableTransitions
+    ) {
+      this.setState({ enableTransitions: false });
     }
+    // debounce mouse events since they can occur far more often than the browser can paint
+    window.cancelAnimationFrame(this._rafRef);
+    this._rafRef = window.requestAnimationFrame(() => {
+      const { min, max } = this.props;
+      const perc = (event.clientX - this._targetRect.left) / this._targetRect.width;
 
-    const newValue = (max! - min!) * perc + min!;
-    this._interactTarget.value = String(newValue);
-    this._interactTarget.dispatchEvent(syntheticEvent);
+      // Event constructor supported so use it
+      let syntheticEvent;
+      if (typeof Event === 'function') {
+        syntheticEvent = new Event('change');
+      } else {
+        syntheticEvent = document.createEvent('Event');
+        // ie11 only supports change events on range input so use that
+        syntheticEvent.initEvent('change', true, true);
+      }
+
+      const newValue = (max! - min!) * perc + min!;
+      this._interactTarget.value = String(newValue);
+      this._interactTarget.dispatchEvent(syntheticEvent);
+    });
   }
 
   private _onMouseUp(event: MouseEvent): void {
     this._interactTarget.removeEventListener('change', this._directInputHandler);
-    event.currentTarget!.removeEventListener('mouseup', this._onMouseUp);
-    event.currentTarget!.removeEventListener('mousemove', this._onMouseMove);
+    window.removeEventListener('mouseup', this._onMouseUp);
+    window.removeEventListener('mousemove', this._onMouseMove);
+    // re-enable transitions now that direct manipulation has ended
+    this.setState({ enableTransitions: true });
   }
 }

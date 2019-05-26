@@ -4,10 +4,10 @@ import { getFocusStyle } from '../../Styling';
 const sliderHeight = 4;
 
 export const getDualRangeInputStyles = (props: IDualRangeInputStyleProps): IDualRangeInputStyles => {
-  const { theme, className } = props;
+  const { theme, className, enableTransitions } = props;
   return {
     root: [
-      { display: 'flex', position: 'relative', height: 28, alignItems: 'center' },
+      { display: 'flex', position: 'relative', height: 28, alignItems: 'center', userSelect: 'none' },
       // class name should always be last
       className
     ],
@@ -15,7 +15,7 @@ export const getDualRangeInputStyles = (props: IDualRangeInputStyleProps): IDual
       height: sliderHeight,
       backgroundColor: theme.palette.neutralTertiaryAlt,
       borderRadius: '4px 0px 0px 4px',
-      transition: 'flex-basis 500ms ease-in-out'
+      ...(enableTransitions && { transition: 'flex-basis 500ms ease-in-out' })
     },
     startContainer: { height: sliderHeight, flex: '0 0 0px', maxWidth: 0 },
     startRange: {
@@ -78,7 +78,7 @@ export const getDualRangeInputStyles = (props: IDualRangeInputStyleProps): IDual
       height: sliderHeight,
       borderRadius: '0px 4px 4px 0px',
       backgroundColor: theme.palette.neutralTertiaryAlt,
-      transition: 'flex-basis 500ms ease-in-out'
+      ...(enableTransitions && { transition: 'flex-basis 500ms ease-in-out' })
     }
   };
 };
