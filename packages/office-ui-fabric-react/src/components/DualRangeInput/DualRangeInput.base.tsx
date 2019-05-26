@@ -2,6 +2,10 @@ import * as React from 'react';
 import { BaseComponent, classNamesFunction, IPoint } from '../../Utilities';
 import { IDualRangeInputProps, IDualRangeInputStyleProps, IDualRangeInputStyles, IDualRangeInputState } from './DualRangeInput.types';
 
+/**
+ * TODO : ADD RTL SUPPORT
+ */
+
 const getClassNames = classNamesFunction<IDualRangeInputStyleProps, IDualRangeInputStyles>();
 
 const dragDelta: number = 10;
