@@ -13,7 +13,7 @@ export class DualRangeInputExample extends React.Component<{}, { startValue: num
 
   public render(): JSX.Element {
     return (
-      <div>
+      <div style={{ padding: 20 }}>
         <DualRangeInput onInput={this._onInput} max={1000} />
         <div style={{ backgroundColor: 'pink' }}>
           {this.state.startValue} || {this.state.endValue}
