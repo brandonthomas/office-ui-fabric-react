@@ -14,7 +14,7 @@ export class DualRangeInputExample extends React.Component<{}, { startValue: num
   public render(): JSX.Element {
     return (
       <div style={{ padding: 20 }}>
-        <DualRangeInput onInput={this._onInput} max={1000} />
+        <DualRangeInput onInput={this._onInput} max={1000} startAriaLabel="Beginning of date range" />
         <DualRangeInput onInput={this._onInput} max={20} />
         <div style={{ backgroundColor: 'pink' }}>
           {this.state.startValue} || {this.state.endValue}

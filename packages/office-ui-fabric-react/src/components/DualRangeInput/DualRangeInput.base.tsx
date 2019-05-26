@@ -44,16 +44,17 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
   }
 
   public render(): JSX.Element {
-    const { styles, theme, className, min, max, startValue, endValue } = this.props;
+    const { styles, theme, className, min, max, startValue, endValue, startAriaLabel, endAriaLabel } = this.props;
     const classNames = getClassNames(styles, { theme: theme!, className, enableTransitions: this.state.enableTransitions });
     return (
       <div className={classNames.root} onMouseDown={this._onMouseDown}>
         <div className={classNames.startDeadSpace} ref={this._setStartDeadspaceRef} />
         <div className={classNames.startContainer}>
           <input
+            aria-label={startAriaLabel}
             min={min}
             max={max}
-            defaultValue={startValue!.toString()}
+            defaultValue={String(startValue)}
             type="range"
             className={classNames.startRange}
             onInput={this._onInput}
@@ -65,9 +66,10 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
         <div className={classNames.filler} />
         <div className={classNames.endContainer}>
           <input
+            aria-label={endAriaLabel}
             min={min}
             max={max}
-            defaultValue={endValue!.toString()}
+            defaultValue={String(endValue)}
             type="range"
             className={classNames.endRange}
             onInput={this._onInput}
@@ -108,13 +110,13 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
   private _handleInput(target: HTMLInputElement): void {
     if (this._startRef === target) {
       if (+target.value > this._endValue) {
-        target.value = this._endValue.toString();
+        target.value = String(this._endValue);
       }
       this._startValue = +target.value;
     }
     if (this._endRef === target) {
       if (+target.value < this._startValue) {
-        target.value = this._startValue.toString();
+        target.value = String(this._startValue);
       }
       this._endValue = +target.value;
     }
@@ -166,8 +168,8 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
   private _onMouseMove(event: MouseEvent): void {
     // detect a reasonable distance has been moved with mouse and turn off transitions
     if (
-      (Math.abs(event.clientX - this._mouseDownOrigin.x) > dragDelta || Math.abs(event.clientY - this._mouseDownOrigin.y) > dragDelta) &&
-      this.state.enableTransitions
+      this.state.enableTransitions &&
+      (Math.abs(event.clientX - this._mouseDownOrigin.x) > dragDelta || Math.abs(event.clientY - this._mouseDownOrigin.y) > dragDelta)
     ) {
       this.setState({ enableTransitions: false });
     }
@@ -176,20 +178,22 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
     this._rafRef = window.requestAnimationFrame(() => {
       const { min, max } = this.props;
       const perc = (event.clientX - this._targetRect.left) / this._targetRect.width;
-
-      // Event constructor supported so use it
-      let syntheticEvent;
-      if (typeof Event === 'function') {
-        syntheticEvent = new Event('change');
-      } else {
-        syntheticEvent = document.createEvent('Event');
-        // ie11 only supports change events on range input so use that
-        syntheticEvent.initEvent('change', true, true);
-      }
-
       const newValue = (max! - min!) * perc + min!;
-      this._interactTarget.value = String(newValue);
-      this._interactTarget.dispatchEvent(syntheticEvent);
+
+      // only dispatch if we actually changed the value
+      if (this._interactTarget.value !== String(newValue)) {
+        // Event constructor supported so use it
+        let syntheticEvent;
+        if (typeof Event === 'function') {
+          syntheticEvent = new Event('change');
+        } else {
+          syntheticEvent = document.createEvent('Event');
+          // ie11 only supports change events on range input so use that
+          syntheticEvent.initEvent('change', true, true);
+        }
+        this._interactTarget.value = String(newValue);
+        this._interactTarget.dispatchEvent(syntheticEvent);
+      }
     });
   }
 

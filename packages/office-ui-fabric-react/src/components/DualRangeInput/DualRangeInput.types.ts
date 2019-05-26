@@ -8,11 +8,22 @@ export interface IDualRangeInputProps extends IBaseProps {
   endValue?: number;
   theme?: ITheme;
   styles?: IStyleFunctionOrObject<IDualRangeInputStyleProps, IDualRangeInputStyles>;
+  /**
+   * aria label for the first thumb
+   */
+  startAriaLabel?: string;
+  /**
+   * aria label for the second thumb
+   */
+  endAriaLabel?: string;
 
   /**
    * Additional class name to provide on the root element, in addition to the ms-Checkbox class.
    */
   className?: string;
+  /**
+   * Callback that is triggered when the user is actively manipulating the slider
+   */
   onInput?: (startValue: number, endValue: number) => void;
 
   onRenderTrack?: IRenderFunction<IDualRangeInputProps>;
