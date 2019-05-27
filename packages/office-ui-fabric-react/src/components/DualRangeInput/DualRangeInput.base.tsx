@@ -204,9 +204,7 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
       const perc = (event.clientX - this._targetRect.left) / this._targetRect.width;
       const newValue = (max! - min!) * perc;
       // ensure we are rounding to the right values so our comparison below works
-      // TODO FIX THIS
-      const newRoundedValue = Math.round((newValue / step!) % step!) * step! + min!;
-      console.log(newRoundedValue);
+      const newRoundedValue = Math.round(newValue / step!) * step! + min!;
 
       // only dispatch if we actually changed the value
       if (this._interactTarget.value !== String(newRoundedValue)) {

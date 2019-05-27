@@ -35,7 +35,8 @@ export class DualRangeInputExample extends React.Component<
           startAriaValueText={this.state.startDate}
           endAriaValueText={this.state.endDate}
         />
-        <DualRangeInput />
+        <DualRangeInput step={2} />
+        <DualRangeInput step={12} min={-12} max={144} />
         <div style={{ backgroundColor: 'pink' }}>
           {this.state.startDate} || {this.state.endDate}
         </div>
