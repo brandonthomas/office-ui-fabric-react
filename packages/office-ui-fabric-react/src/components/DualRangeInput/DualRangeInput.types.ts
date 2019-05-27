@@ -17,6 +17,15 @@ export interface IDualRangeInputProps extends IBaseProps {
    */
   endAriaLabel?: string;
 
+  startAriaValueText?: string;
+
+  endAriaValueText?: string;
+
+  startAriaValueNow?: number;
+  endAriaValueNow?: number;
+
+  step?: number;
+
   /**
    * Additional class name to provide on the root element, in addition to the ms-Checkbox class.
    */

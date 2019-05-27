@@ -15,7 +15,8 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
     min: 0,
     max: 100,
     startValue: 10,
-    endValue: 80
+    endValue: 80,
+    step: 2
   };
   private _startRef: HTMLInputElement;
   private _endRef: HTMLInputElement;
@@ -48,7 +49,22 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
   }
 
   public render(): JSX.Element {
-    const { styles, theme, className, min, max, startValue, endValue, startAriaLabel, endAriaLabel } = this.props;
+    const {
+      styles,
+      theme,
+      className,
+      min,
+      max,
+      startValue,
+      endValue,
+      startAriaLabel,
+      endAriaLabel,
+      startAriaValueText,
+      endAriaValueText,
+      startAriaValueNow,
+      endAriaValueNow,
+      step
+    } = this.props;
     const classNames = getClassNames(styles, { theme: theme!, className, enableTransitions: this.state.enableTransitions });
     return (
       <div className={classNames.root} onMouseDown={this._onMouseDown}>
@@ -61,9 +77,11 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
             defaultValue={String(startValue)}
             type="range"
             className={classNames.startRange}
-            onInput={this._onInput}
             onChange={this._onInput}
             ref={this._setStartRef}
+            aria-valuetext={startAriaValueText}
+            aria-valuenow={startAriaValueNow}
+            step={step}
           />
           <div className={classNames.startThumb} />
         </div>
@@ -76,9 +94,11 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
             defaultValue={String(endValue)}
             type="range"
             className={classNames.endRange}
-            onInput={this._onInput}
             onChange={this._onInput}
             ref={this._setEndRef}
+            aria-valuetext={endAriaValueText}
+            aria-valuenow={endAriaValueNow}
+            step={step}
           />
           <div className={classNames.endThumb} />
         </div>
@@ -180,12 +200,16 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
     // debounce mouse events since they can occur far more often than the browser can paint
     window.cancelAnimationFrame(this._rafRef);
     this._rafRef = window.requestAnimationFrame(() => {
-      const { min, max } = this.props;
+      const { min, max, step } = this.props;
       const perc = (event.clientX - this._targetRect.left) / this._targetRect.width;
-      const newValue = (max! - min!) * perc + min!;
+      const newValue = (max! - min!) * perc;
+      // ensure we are rounding to the right values so our comparison below works
+      // TODO FIX THIS
+      const newRoundedValue = Math.round((newValue / step!) % step!) * step! + min!;
+      console.log(newRoundedValue);
 
       // only dispatch if we actually changed the value
-      if (this._interactTarget.value !== String(newValue)) {
+      if (this._interactTarget.value !== String(newRoundedValue)) {
         // Event constructor supported so use it
         let syntheticEvent;
         if (typeof Event === 'function') {
@@ -195,7 +219,7 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
           // ie11 only supports change events on range input so use that
           syntheticEvent.initEvent('change', true, true);
         }
-        this._interactTarget.value = String(newValue);
+        this._interactTarget.value = String(newRoundedValue);
         this._interactTarget.dispatchEvent(syntheticEvent);
       }
     });
