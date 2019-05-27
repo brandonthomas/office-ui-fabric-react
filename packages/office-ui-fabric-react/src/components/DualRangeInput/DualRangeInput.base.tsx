@@ -4,6 +4,7 @@ import { IDualRangeInputProps, IDualRangeInputStyleProps, IDualRangeInputStyles,
 
 /**
  * TODO : ADD RTL SUPPORT
+ * TODO: Ensure we can programmatically set a value if necessary
  */
 
 const getClassNames = classNamesFunction<IDualRangeInputStyleProps, IDualRangeInputStyles>();
