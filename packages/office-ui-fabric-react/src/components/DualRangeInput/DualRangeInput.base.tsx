@@ -7,6 +7,7 @@ import { IDualRangeInputProps, IDualRangeInputStyleProps, IDualRangeInputStyles,
  * TODO: Ensure we can programmatically set a value if necessary
  * TODO: Test touch
  * TODO: Write tests
+ * convert to arrow functions/remove bind
  */
 
 const getClassNames = classNamesFunction<IDualRangeInputStyleProps, IDualRangeInputStyles>();
