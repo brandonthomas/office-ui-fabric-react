@@ -18,9 +18,9 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
   public static defaultProps: Partial<IDualRangeInputProps> = {
     min: 0,
     max: 100,
-    startValue: 10,
-    endValue: 80,
-    step: 2
+    startValue: 0,
+    endValue: 100,
+    step: 1
   };
   private _startRef: HTMLInputElement;
   private _endRef: HTMLInputElement;
@@ -173,7 +173,7 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
     this._targetRect = (event.currentTarget as HTMLInputElement).getBoundingClientRect();
     this._mouseDownOrigin = { x: event.clientX, y: event.clientY };
     const perc = (event.clientX - this._targetRect.left) / this._targetRect.width;
-    this._interactTarget = perc <= this._startPerc ? this._startRef : this._endRef;
+    this._interactTarget = perc <= (this._endPerc - this._startPerc) / 2 + this._startPerc ? this._startRef : this._endRef;
 
     window.addEventListener('mousemove', this._onMouseMove);
     window.addEventListener('mouseup', this._onMouseUp);
