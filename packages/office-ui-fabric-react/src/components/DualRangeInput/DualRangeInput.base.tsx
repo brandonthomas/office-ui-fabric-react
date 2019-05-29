@@ -7,7 +7,8 @@ import { IDualRangeInputProps, IDualRangeInputStyleProps, IDualRangeInputStyles,
  * TODO: Ensure we can programmatically set a value if necessary
  * TODO: Test touch
  * TODO: Write tests
- * convert to arrow functions/remove bind
+ * TODO: convert to arrow functions/remove bind
+ * TODO: Expose render methods for thumbs
  */
 
 const getClassNames = classNamesFunction<IDualRangeInputStyleProps, IDualRangeInputStyles>();
@@ -228,6 +229,7 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
   }
 
   private _onMouseUp(event: MouseEvent): void {
+    this._interactTarget.focus();
     this._interactTarget.removeEventListener('change', this._directInputHandler);
     window.removeEventListener('mouseup', this._onMouseUp);
     window.removeEventListener('mousemove', this._onMouseMove);

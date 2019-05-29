@@ -42,7 +42,12 @@ export const getDualRangeInputStyles = (props: IDualRangeInputStyleProps): IDual
         height: 16,
         transform: 'translate(-50%,-50%)',
         marginTop: 2,
-        selectors: { '::after': { display: 'none' } }
+        selectors: {
+          '::after': { display: 'none' },
+          '*[dir="rtl"] &': {
+            transform: 'translate(50%,-50%)'
+          }
+        }
       }
     ],
     filler: { height: sliderHeight, flex: '1 1 auto', backgroundColor: theme.palette.neutralSecondary },
@@ -71,7 +76,14 @@ export const getDualRangeInputStyles = (props: IDualRangeInputStyleProps): IDual
         height: 16,
         transform: 'translate(-50%,-50%)',
         marginTop: 2,
-        selectors: { '::after': { display: 'none' } }
+        selectors: {
+          '::after': {
+            display: 'none'
+          },
+          '*[dir="rtl"] &': {
+            transform: 'translate(50%,-50%)'
+          }
+        }
       }
     ],
     endDeadSpace: {
