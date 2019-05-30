@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { BaseComponent, classNamesFunction, IPoint } from '../../Utilities';
+import { BaseComponent, classNamesFunction, IPoint, warnMutuallyExclusive } from '../../Utilities';
 import { IDualRangeInputProps, IDualRangeInputStyleProps, IDualRangeInputStyles, IDualRangeInputState } from './DualRangeInput.types';
 
 /**
  * TODO : ADD RTL SUPPORT
- * TODO: Ensure we can programmatically set a value if necessary
  * TODO: Test touch
  * TODO: Write tests
  * TODO: convert to arrow functions/remove bind
@@ -13,44 +12,51 @@ import { IDualRangeInputProps, IDualRangeInputStyleProps, IDualRangeInputStyles,
 
 const getClassNames = classNamesFunction<IDualRangeInputStyleProps, IDualRangeInputStyles>();
 
+// The delta in which we can infer a drag is happening
+// primarily used to disable transitions
 const dragDelta: number = 10;
 
 export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDualRangeInputState> {
   public static defaultProps: Partial<IDualRangeInputProps> = {
     min: 0,
     max: 100,
-    startValue: 0,
-    endValue: 100,
     step: 1
   };
   private _startRef: HTMLInputElement;
   private _endRef: HTMLInputElement;
-  private _startDeadspaceRef: HTMLDivElement;
-  private _endDeadspaceRef: HTMLDivElement;
-  private _startValue: number;
-  private _endValue: number;
   private _interactTarget: HTMLInputElement;
   private _startPerc: number;
   private _endPerc: number;
   private _targetRect: DOMRect | ClientRect;
   private _rafRef: number;
   private _mouseDownOrigin: IPoint;
+
+  public static getDerivedStateFromProps(
+    nextProps: Readonly<IDualRangeInputProps>,
+    prevState: Readonly<IDualRangeInputState>
+  ): IDualRangeInputState {
+    return {
+      ...prevState,
+      ...(nextProps.startValue && { startValue: nextProps.startValue > prevState.endValue ? prevState.endValue : nextProps.startValue }),
+      ...(nextProps.endValue && { endValue: nextProps.endValue < prevState.startValue ? prevState.startValue : nextProps.endValue })
+    };
+  }
+
   public constructor(props: IDualRangeInputProps) {
     super(props);
     this.state = {
-      enableTransitions: true
+      enableTransitions: true,
+      startValue: props.startValue ? props.startValue : props.defaultStartValue ? props.defaultStartValue : 0,
+      endValue: props.endValue ? props.endValue : props.defaultEndValue ? props.defaultEndValue : 100
     };
-    this._startValue = props.startValue!;
-    this._endValue = props.endValue!;
     this._setStartRef = this._setStartRef.bind(this);
     this._setEndRef = this._setEndRef.bind(this);
     this._onInput = this._onInput.bind(this);
-    this._setStartDeadspaceRef = this._setStartDeadspaceRef.bind(this);
-    this._setEndDeadspaceRef = this._setEndDeadspaceRef.bind(this);
     this._onMouseDown = this._onMouseDown.bind(this);
     this._onMouseMove = this._onMouseMove.bind(this);
     this._onMouseUp = this._onMouseUp.bind(this);
     this._directInputHandler = this._directInputHandler.bind(this);
+    warnMutuallyExclusive('RangeSlider', props, { endValue: 'defaultEndValue', startValue: 'defaultStartValue' });
   }
 
   public render(): JSX.Element {
@@ -60,8 +66,6 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
       className,
       min,
       max,
-      startValue,
-      endValue,
       startAriaLabel,
       endAriaLabel,
       startAriaValueText,
@@ -70,16 +74,21 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
       endAriaValueNow,
       step
     } = this.props;
+
+    const { startValue, endValue } = this.state;
+
+    this._startPerc = (startValue - min!) / (max! - min!);
+    this._endPerc = (endValue - min!) / (max! - min!);
     const classNames = getClassNames(styles, { theme: theme!, className, enableTransitions: this.state.enableTransitions });
     return (
       <div className={classNames.root} onMouseDown={this._onMouseDown}>
-        <div className={classNames.startDeadSpace} ref={this._setStartDeadspaceRef} />
+        <div className={classNames.startDeadSpace} style={{ flexBasis: `${this._startPerc * 100}%` }} />
         <div className={classNames.startContainer}>
           <input
             aria-label={startAriaLabel}
             min={min}
             max={max}
-            defaultValue={String(startValue)}
+            value={String(startValue)}
             type="range"
             className={classNames.startRange}
             onChange={this._onInput}
@@ -96,7 +105,7 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
             aria-label={endAriaLabel}
             min={min}
             max={max}
-            defaultValue={String(endValue)}
+            value={String(endValue)}
             type="range"
             className={classNames.endRange}
             onChange={this._onInput}
@@ -107,13 +116,9 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
           />
           <div className={classNames.endThumb} />
         </div>
-        <div className={classNames.endDeadSpace} ref={this._setEndDeadspaceRef} />
+        <div className={classNames.endDeadSpace} style={{ flexBasis: `${(1 - this._endPerc) * 100}%` }} />
       </div>
     );
-  }
-
-  public componentDidMount(): void {
-    this._updateVisuals();
   }
 
   private _setStartRef(ref: HTMLInputElement): void {
@@ -123,46 +128,18 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
   private _setEndRef(ref: HTMLInputElement): void {
     this._endRef = ref;
   }
-
-  private _setStartDeadspaceRef(ref: HTMLInputElement): void {
-    this._startDeadspaceRef = ref;
-  }
-
-  private _setEndDeadspaceRef(ref: HTMLInputElement): void {
-    this._endDeadspaceRef = ref;
-  }
-
   private _onInput(event: React.FormEvent<HTMLInputElement>): void {
     this._handleInput(event.target as HTMLInputElement);
   }
 
   private _handleInput(target: HTMLInputElement): void {
-    if (this._startRef === target) {
-      if (+target.value > this._endValue) {
-        target.value = String(this._endValue);
-      }
-      this._startValue = +target.value;
-    }
-    if (this._endRef === target) {
-      if (+target.value < this._startValue) {
-        target.value = String(this._startValue);
-      }
-      this._endValue = +target.value;
-    }
-
-    this._updateVisuals();
-
+    const startValue = target === this._startRef ? +target.value : this.state.startValue;
+    const endValue = target === this._endRef ? +target.value : this.state.endValue;
+    const state = { ...(!this.props.startValue && { startValue: startValue }), ...(!this.props.endValue && { endValue: endValue }) };
+    this.setState(state);
     if (this.props.onInput) {
-      this.props.onInput(this._startValue, this._endValue);
+      this.props.onInput(startValue, endValue);
     }
-  }
-
-  private _updateVisuals(): void {
-    const { min, max } = this.props;
-    this._startPerc = (this._startValue - min!) / (max! - min!);
-    this._endPerc = (this._endValue - min!) / (max! - min!);
-    this._startDeadspaceRef.style.flexBasis = `${this._startPerc * 100}%`;
-    this._endDeadspaceRef.style.flexBasis = `${(1 - this._endPerc) * 100}%`;
   }
 
   private _directInputHandler(e: Event): void {
@@ -212,7 +189,7 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
       const newRoundedValue = Math.round(newValue / step!) * step! + min!;
 
       // only dispatch if we actually changed the value
-      if (this._interactTarget.value !== String(newRoundedValue)) {
+      if (+this._interactTarget.value !== newRoundedValue) {
         // Event constructor supported so use it
         let syntheticEvent;
         if (typeof Event === 'function') {
@@ -228,7 +205,7 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
     });
   }
 
-  private _onMouseUp(event: MouseEvent): void {
+  private _onMouseUp(_event: MouseEvent): void {
     this._interactTarget.focus();
     this._interactTarget.removeEventListener('change', this._directInputHandler);
     window.removeEventListener('mouseup', this._onMouseUp);

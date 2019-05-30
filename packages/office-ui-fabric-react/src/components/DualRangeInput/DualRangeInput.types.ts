@@ -6,6 +6,8 @@ export interface IDualRangeInputProps extends IBaseProps {
   max?: number;
   startValue?: number;
   endValue?: number;
+  defaultEndValue?: number;
+  defaultStartValue?: number;
   theme?: ITheme;
   styles?: IStyleFunctionOrObject<IDualRangeInputStyleProps, IDualRangeInputStyles>;
   /**
@@ -46,6 +48,9 @@ export interface IDualRangeInputState {
    * used to smooth mouse interactions
    */
   enableTransitions: boolean;
+
+  startValue: number;
+  endValue: number;
 }
 
 export interface IDualRangeInputStyles {
