@@ -33,12 +33,17 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
 
   public static getDerivedStateFromProps(
     nextProps: Readonly<IDualRangeInputProps>,
-    prevState: Readonly<IDualRangeInputState>
-  ): IDualRangeInputState {
+    state: Readonly<IDualRangeInputState>
+  ): Partial<IDualRangeInputState> {
     return {
-      ...prevState,
-      ...(nextProps.startValue && { startValue: nextProps.startValue > prevState.endValue ? prevState.endValue : nextProps.startValue }),
-      ...(nextProps.endValue && { endValue: nextProps.endValue < prevState.startValue ? prevState.startValue : nextProps.endValue })
+      ...(nextProps.startValue &&
+        nextProps.startValue !== state.startValue && {
+          startValue: nextProps.startValue > state.endValue ? state.endValue : nextProps.startValue
+        }),
+      ...(nextProps.endValue &&
+        nextProps.endValue !== state.endValue && {
+          endValue: nextProps.endValue < state.startValue ? state.startValue : nextProps.endValue
+        })
     };
   }
 
@@ -137,8 +142,8 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
     const endValue = target === this._endRef ? +target.value : this.state.endValue;
     const state = { ...(!this.props.startValue && { startValue: startValue }), ...(!this.props.endValue && { endValue: endValue }) };
     this.setState(state);
-    if (this.props.onInput) {
-      this.props.onInput(startValue, endValue);
+    if (this.props.onChange) {
+      this.props.onChange(startValue, endValue);
     }
   }
 

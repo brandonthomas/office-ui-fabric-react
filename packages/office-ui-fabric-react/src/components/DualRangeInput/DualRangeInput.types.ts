@@ -35,7 +35,7 @@ export interface IDualRangeInputProps extends IBaseProps {
   /**
    * Callback that is triggered when the user is actively manipulating the slider
    */
-  onInput?: (startValue: number, endValue: number) => void;
+  onChange?: (startValue: number, endValue: number) => void;
 
   onRenderTrack?: IRenderFunction<IDualRangeInputProps>;
   onRenderStartThumb?: IRenderFunction<IDualRangeInputProps>;

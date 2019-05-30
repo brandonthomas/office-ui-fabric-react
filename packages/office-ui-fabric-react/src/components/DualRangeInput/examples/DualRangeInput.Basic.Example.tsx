@@ -25,7 +25,7 @@ export class DualRangeInputExample extends React.Component<
     return (
       <div style={{ padding: 20 }}>
         <DualRangeInput
-          onInput={this._onInput}
+          onChange={this._onInput}
           min={this._startDate}
           max={this._today}
           startValue={startValue}
