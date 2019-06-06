@@ -9,7 +9,7 @@ export class DualRangeInputExample extends React.Component<
   private _startDate: number;
   constructor(props: {}) {
     super(props);
-    this._onInput = this._onInput.bind(this);
+    this._onChange = this._onChange.bind(this);
     let date = new Date();
     this._today = date.getTime();
 
@@ -24,8 +24,9 @@ export class DualRangeInputExample extends React.Component<
     const { startValue, endValue } = this.state;
     return (
       <div style={{ padding: 20 }}>
+        Controlled RangeSlider
         <DualRangeInput
-          onChange={this._onInput}
+          onChange={this._onChange}
           min={this._startDate}
           max={this._today}
           startValue={startValue}
@@ -38,7 +39,7 @@ export class DualRangeInputExample extends React.Component<
         <div style={{ backgroundColor: 'pink' }}>
           {this.state.startDate} || {this.state.endDate}
         </div>
-        Controlled RangeSlider
+        Un-Controlled RangeSlider
         <DualRangeInput startAriaValueText={'small'} endAriaValueText={'large'} defaultStartValue={20} defaultEndValue={80} />
       </div>
     );
@@ -49,7 +50,7 @@ export class DualRangeInputExample extends React.Component<
     this.setState({ startDate: new Date(startValue).toDateString(), endDate: new Date(endValue).toDateString() });
   }
 
-  private _onInput(startValue: number, endValue: number): void {
+  private _onChange(startValue: number, endValue: number): void {
     this.setState({ startValue, endValue, startDate: new Date(startValue).toDateString(), endDate: new Date(endValue).toDateString() });
   }
 }

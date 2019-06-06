@@ -1083,10 +1083,15 @@ export class DropdownBase extends React.Component<IDropdownInternalProps, IDropd
 export const DualRangeInput: React_2.StatelessComponent<IDualRangeInputProps>;
 
 // @public (undocumented)
-export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, {}> {
+export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDualRangeInputState> {
+    constructor(props: IDualRangeInputProps);
+    // (undocumented)
+    static defaultProps: Partial<IDualRangeInputProps>;
+    // (undocumented)
+    static getDerivedStateFromProps(nextProps: Readonly<IDualRangeInputProps>, state: Readonly<IDualRangeInputState>): Partial<IDualRangeInputState>;
     // (undocumented)
     render(): JSX.Element;
-}
+    }
 
 // @public (undocumented)
 export enum ElementType {
@@ -4350,14 +4355,55 @@ export interface IDropHintDetails {
 export interface IDualRangeInputProps extends IBaseProps {
     className?: string;
     // (undocumented)
+    defaultEndValue?: number;
+    // (undocumented)
+    defaultStartValue?: number;
+    endAriaLabel?: string;
+    // (undocumented)
+    endAriaValueNow?: number;
+    // (undocumented)
+    endAriaValueText?: string;
+    // (undocumented)
+    endValue?: number;
+    // (undocumented)
+    max?: number;
+    // (undocumented)
+    min?: number;
+    onChange?: (startValue: number, endValue: number) => void;
+    // (undocumented)
+    onRenderEndThumb?: IRenderFunction<IDualRangeInputProps>;
+    // (undocumented)
+    onRenderStartThumb?: IRenderFunction<IDualRangeInputProps>;
+    // (undocumented)
+    onRenderTrack?: IRenderFunction<IDualRangeInputProps>;
+    startAriaLabel?: string;
+    // (undocumented)
+    startAriaValueNow?: number;
+    // (undocumented)
+    startAriaValueText?: string;
+    // (undocumented)
+    startValue?: number;
+    // (undocumented)
+    step?: number;
+    // (undocumented)
     styles?: IStyleFunctionOrObject<IDualRangeInputStyleProps, IDualRangeInputStyles>;
     // (undocumented)
     theme?: ITheme;
 }
 
 // @public (undocumented)
+export interface IDualRangeInputState {
+    enableTransitions: boolean;
+    // (undocumented)
+    endValue: number;
+    // (undocumented)
+    startValue: number;
+}
+
+// @public (undocumented)
 export interface IDualRangeInputStyleProps {
     className?: string;
+    enableTransitions: boolean;
     // (undocumented)
     theme: ITheme;
 }
@@ -4365,11 +4411,21 @@ export interface IDualRangeInputStyleProps {
 // @public (undocumented)
 export interface IDualRangeInputStyles {
     // (undocumented)
+    endContainer: IStyle;
+    // (undocumented)
+    endDeadSpace: IStyle;
+    // (undocumented)
     endRange: IStyle;
     // (undocumented)
     endThumb: IStyle;
     // (undocumented)
+    filler: IStyle;
+    // (undocumented)
     root: IStyle;
+    // (undocumented)
+    startContainer: IStyle;
+    // (undocumented)
+    startDeadSpace: IStyle;
     // (undocumented)
     startRange: IStyle;
     // (undocumented)
