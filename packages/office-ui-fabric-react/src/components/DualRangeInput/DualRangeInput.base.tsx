@@ -140,10 +140,17 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
   private _handleInput(target: HTMLInputElement): void {
     const startValue = target === this._startRef ? Math.min(+target.value, this.state.endValue) : this.state.startValue;
     const endValue = target === this._endRef ? Math.max(+target.value, this.state.startValue) : this.state.endValue;
-    const state = { ...(!this.props.startValue && { startValue }), ...(!this.props.endValue && { endValue }) };
-    this.setState(state);
-    if (this.props.onChange) {
-      this.props.onChange(startValue, endValue);
+    const updateStartValue = this.state.startValue !== startValue;
+    const updateEndValue = this.state.endValue !== endValue;
+    const state = {
+      ...(!this.props.startValue && updateStartValue && { startValue }),
+      ...(!this.props.endValue && updateEndValue && { endValue })
+    };
+    if (updateStartValue || updateEndValue) {
+      this.setState(state);
+      if (this.props.onChange) {
+        this.props.onChange(startValue, endValue);
+      }
     }
   }
 
