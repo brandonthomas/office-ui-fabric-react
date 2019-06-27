@@ -1,6 +1,10 @@
 import * as React from 'react';
-import { Chiclet, ChicletSize } from '@uifabric/experiments';
-import { createRef, DefaultButton, ITextField, Stack, Text, TextField } from 'office-ui-fabric-react';
+import { Chiclet } from '../Chiclet';
+import { ChicletSize } from '../Chiclet.types';
+import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
+import { Stack } from 'office-ui-fabric-react/lib/Stack';
+import { Text } from 'office-ui-fabric-react/lib/Text';
+import { TextField, ITextField } from 'office-ui-fabric-react/lib/TextField';
 
 export interface IChicletBasicExampleState {
   textFieldValue: string;
@@ -9,7 +13,7 @@ export interface IChicletBasicExampleState {
 const TEST_URL = 'http://fabricweb.z5.web.core.windows.net/pr-deploy-site/refs/heads/master/chiclet-test.html';
 
 export class ChicletBasicExample extends React.Component<{}, IChicletBasicExampleState> {
-  private _textField = createRef<ITextField>();
+  private _textField = React.createRef<ITextField>();
 
   constructor(props: {}) {
     super(props);
@@ -29,7 +33,13 @@ export class ChicletBasicExample extends React.Component<{}, IChicletBasicExampl
           <TextField componentRef={this._textField} styles={{ root: { width: '300px' } }} defaultValue="" />
           <DefaultButton text="Change url" onClick={this._onClickButton} />
         </Stack>
-        <Chiclet url={textFieldValue} size={ChicletSize.medium} />
+        <Chiclet
+          url={textFieldValue}
+          title={'WordTest with a really long title that will wrap around to the second line but not the third line'}
+          image="https://static2.sharepointonline.com/files/fabric/assets/brand-icons/document/svg/docx_48x1.svg"
+          itemType="docx"
+          size={ChicletSize.medium}
+        />
       </Stack>
     );
   }

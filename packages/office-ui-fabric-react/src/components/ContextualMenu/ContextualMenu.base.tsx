@@ -41,8 +41,12 @@ import { IContextualMenuItemStyleProps, IContextualMenuItemStyles } from './Cont
 
 import { getItemStyles } from './ContextualMenu.classNames';
 
-const getClassNames = classNamesFunction<IContextualMenuStyleProps, IContextualMenuStyles>();
-const getContextualMenuItemClassNames = classNamesFunction<IContextualMenuItemStyleProps, IContextualMenuItemStyles>();
+const getClassNames = classNamesFunction<IContextualMenuStyleProps, IContextualMenuStyles>({
+  disableCaching: true
+});
+const getContextualMenuItemClassNames = classNamesFunction<IContextualMenuItemStyleProps, IContextualMenuItemStyles>({
+  disableCaching: true
+});
 
 export interface IContextualMenuState {
   expandedMenuItemKey?: string;
@@ -627,7 +631,7 @@ export class ContextualMenuBase extends BaseComponent<IContextualMenuProps, ICon
   ): React.ReactNode {
     const { contextualMenuItemAs: ChildrenRenderer = ContextualMenuItem } = this.props;
     const { itemProps } = item;
-    const divHtmlProperties = itemProps && getNativeProps(itemProps, divProperties);
+    const divHtmlProperties = itemProps && getNativeProps<React.HTMLAttributes<HTMLDivElement>>(itemProps, divProperties);
     return (
       <div className={this._classNames.header} {...divHtmlProperties} style={item.style}>
         <ChildrenRenderer
