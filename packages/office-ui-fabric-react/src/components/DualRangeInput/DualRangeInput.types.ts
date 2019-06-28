@@ -10,6 +10,7 @@ export interface IDualRangeInputProps extends IBaseProps {
   defaultStartValue?: number;
   theme?: ITheme;
   styles?: IStyleFunctionOrObject<IDualRangeInputStyleProps, IDualRangeInputStyles>;
+  disabled?: boolean;
   /**
    * aria label for the first thumb
    */
@@ -79,4 +80,5 @@ export interface IDualRangeInputStyleProps {
    * used to smooth mouse interactions
    */
   enableTransitions: boolean;
+  disabled?: boolean;
 }

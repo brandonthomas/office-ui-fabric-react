@@ -77,14 +77,15 @@ export class DualRangeInputBase extends BaseComponent<IDualRangeInputProps, IDua
       endAriaValueText,
       startAriaValueNow,
       endAriaValueNow,
-      step
+      step,
+      disabled
     } = this.props;
 
-    const { startValue, endValue } = this.state;
+    const { startValue, endValue, enableTransitions } = this.state;
 
     this._startPerc = (startValue - min!) / (max! - min!);
     this._endPerc = (endValue - min!) / (max! - min!);
-    const classNames = getClassNames(styles, { theme: theme!, className, enableTransitions: this.state.enableTransitions });
+    const classNames = getClassNames(styles, { theme: theme!, className, enableTransitions, disabled });
     return (
       <div className={classNames.root} onMouseDown={this._onMouseDown}>
         <div className={classNames.startDeadSpace} style={{ flexBasis: `${this._startPerc * 100}%` }} />
