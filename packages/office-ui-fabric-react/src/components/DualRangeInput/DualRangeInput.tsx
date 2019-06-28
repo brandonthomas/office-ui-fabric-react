@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { styled } from '../../Utilities';
 import { IDualRangeInputProps, IDualRangeInputStyles, IDualRangeInputStyleProps } from './DualRangeInput.types';
 import { DualRangeInputBase } from './DualRangeInput.base';

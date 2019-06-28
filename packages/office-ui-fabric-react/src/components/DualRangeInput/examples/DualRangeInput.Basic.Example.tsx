@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DualRangeInput } from '../DualRangeInput';
+import { DualRangeInput } from 'office-ui-fabric-react/lib/DualRangeInput';
 
 export class DualRangeInputExample extends React.Component<
   {},
