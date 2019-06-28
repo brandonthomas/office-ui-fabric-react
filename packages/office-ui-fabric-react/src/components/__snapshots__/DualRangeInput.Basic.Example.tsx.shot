@@ -1,56 +1,109 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Component Examples renders DualRangeInput.Basic.Example.tsx correctly 1`] = `
-<div>
+<div
+  style={
+    Object {
+      "padding": 20,
+    }
+  }
+>
+  Controlled RangeSlider
   <div
     className=
 
         {
+          align-items: center;
           display: flex;
+          height: 28px;
+          position: relative;
+          user-select: none;
         }
+    onMouseDown={[Function]}
   >
     <div
       className=
 
           {
-            position: relative;
+            background-color: #c8c6c4;
+            border-radius: 4px 0px 0px 4px;
+            height: 4px;
+            transition: flex-basis 500ms ease-in-out;
+          }
+      style={
+        Object {
+          "flexBasis": "66.66666666666666%",
+        }
+      }
+    />
+    <div
+      className=
+
+          {
+            flex: 0 0 0px;
+            height: 4px;
+            max-width: 0px;
           }
     >
       <input
+        aria-label="Ben's slider"
+        aria-valuetext="Mon Nov 20 2017"
         className=
 
             {
+              height: 0px;
               opacity: 0;
+              pointer-events: none;
               position: absolute;
+              width: 0px;
             }
-            &:focus + $startThumb {
-              background: green;
+            &:focus + $startThumb:after {
+              display: block;
             }
-        onInput={[Function]}
+        max={1512535280000}
+        min={1511239280000}
+        onChange={[Function]}
+        step={86400000}
         type="range"
+        value="1512103280000"
       />
       <div
         className=
 
             {
-              height: 20px;
+              background: #ffffff;
+              border-color: #605e5c;
+              border-radius: 10px;
+              border-style: solid;
+              border-width: 2px;
+              box-sizing: border-box;
+              display: block;
+              height: 16px;
+              margin-top: 2px;
               outline: transparent;
               position: relative;
-              width: 20px;
+              transform: translate(-50%,-50%);
+              width: 16px;
             }
             &::-moz-focus-inner {
               border: 0;
             }
-            .ms-Fabric--isFocusVisible &:focus:after {
+            .ms-Fabric--isFocusVisible &:after {
               border: 1px solid #ffffff;
-              bottom: 1px;
+              bottom: -3px;
               content: "";
-              left: 1px;
-              outline: 1px solid #666666;
+              left: -3px;
+              outline: 1px solid #605e5c;
               position: absolute;
-              right: 1px;
-              top: 1px;
+              right: -3px;
+              top: -3px;
               z-index: 1;
+            }
+            &::after {
+              display: none;
+            }
+            *[dir="rtl"] & {
+              transform: translate(50%,-50%);
             }
       />
     </div>
@@ -58,47 +111,300 @@ exports[`Component Examples renders DualRangeInput.Basic.Example.tsx correctly 1
       className=
 
           {
-            position: relative;
+            background-color: #605e5c;
+            flex: 1 1 auto;
+            height: 4px;
+          }
+    />
+    <div
+      className=
+
+          {
+            flex: 0 0 0px;
+            height: 4px;
+            max-width: 0px;
           }
     >
       <input
+        aria-valuetext="Mon Nov 20 2017"
         className=
 
             {
+              height: 0px;
               opacity: 0;
+              pointer-events: none;
               position: absolute;
+              width: 0px;
             }
-            &:focus + $endThumb {
-              background: transparent;
-              border: 1px solid black;
-              outline: transparent;
-              position: relative;
+            &:focus + $endThumb:after {
+              display: block;
             }
-            &:focus + $endThumb::-moz-focus-inner {
-              border: 0;
-            }
-            .ms-Fabric--isFocusVisible &:focus:after {
-              border: 1px solid #ffffff;
-              bottom: 1px;
-              content: "";
-              left: 1px;
-              outline: 1px solid #666666;
-              position: absolute;
-              right: 1px;
-              top: 1px;
-              z-index: 1;
-            }
+        max={1512535280000}
+        min={1511239280000}
+        onChange={[Function]}
+        step={86400000}
         type="range"
+        value="1512103280000"
       />
       <div
         className=
 
             {
-              height: 20px;
-              width: 20px;
+              background: #ffffff;
+              border-color: #605e5c;
+              border-radius: 10px;
+              border-style: solid;
+              border-width: 2px;
+              box-sizing: border-box;
+              display: block;
+              height: 16px;
+              margin-top: 2px;
+              outline: transparent;
+              position: relative;
+              transform: translate(-50%,-50%);
+              width: 16px;
+            }
+            &::-moz-focus-inner {
+              border: 0;
+            }
+            .ms-Fabric--isFocusVisible &:after {
+              border: 1px solid #ffffff;
+              bottom: -3px;
+              content: "";
+              left: -3px;
+              outline: 1px solid #605e5c;
+              position: absolute;
+              right: -3px;
+              top: -3px;
+              z-index: 1;
+            }
+            &::after {
+              display: none;
+            }
+            *[dir="rtl"] & {
+              transform: translate(50%,-50%);
             }
       />
     </div>
+    <div
+      className=
+
+          {
+            background-color: #c8c6c4;
+            border-radius: 0px 4px 4px 0px;
+            height: 4px;
+            transition: flex-basis 500ms ease-in-out;
+          }
+      style={
+        Object {
+          "flexBasis": "33.333333333333336%",
+        }
+      }
+    />
+  </div>
+  <div
+    style={
+      Object {
+        "backgroundColor": "pink",
+      }
+    }
+  >
+    Mon Nov 20 2017
+     || 
+    Mon Nov 20 2017
+  </div>
+  Un-Controlled RangeSlider
+  <div
+    className=
+
+        {
+          align-items: center;
+          display: flex;
+          height: 28px;
+          position: relative;
+          user-select: none;
+        }
+    onMouseDown={[Function]}
+  >
+    <div
+      className=
+
+          {
+            background-color: #c8c6c4;
+            border-radius: 4px 0px 0px 4px;
+            height: 4px;
+            transition: flex-basis 500ms ease-in-out;
+          }
+      style={
+        Object {
+          "flexBasis": "20%",
+        }
+      }
+    />
+    <div
+      className=
+
+          {
+            flex: 0 0 0px;
+            height: 4px;
+            max-width: 0px;
+          }
+    >
+      <input
+        aria-valuetext="small"
+        className=
+
+            {
+              height: 0px;
+              opacity: 0;
+              pointer-events: none;
+              position: absolute;
+              width: 0px;
+            }
+            &:focus + $startThumb:after {
+              display: block;
+            }
+        max={100}
+        min={0}
+        onChange={[Function]}
+        step={1}
+        type="range"
+        value="20"
+      />
+      <div
+        className=
+
+            {
+              background: #ffffff;
+              border-color: #605e5c;
+              border-radius: 10px;
+              border-style: solid;
+              border-width: 2px;
+              box-sizing: border-box;
+              display: block;
+              height: 16px;
+              margin-top: 2px;
+              outline: transparent;
+              position: relative;
+              transform: translate(-50%,-50%);
+              width: 16px;
+            }
+            &::-moz-focus-inner {
+              border: 0;
+            }
+            .ms-Fabric--isFocusVisible &:after {
+              border: 1px solid #ffffff;
+              bottom: -3px;
+              content: "";
+              left: -3px;
+              outline: 1px solid #605e5c;
+              position: absolute;
+              right: -3px;
+              top: -3px;
+              z-index: 1;
+            }
+            &::after {
+              display: none;
+            }
+            *[dir="rtl"] & {
+              transform: translate(50%,-50%);
+            }
+      />
+    </div>
+    <div
+      className=
+
+          {
+            background-color: #605e5c;
+            flex: 1 1 auto;
+            height: 4px;
+          }
+    />
+    <div
+      className=
+
+          {
+            flex: 0 0 0px;
+            height: 4px;
+            max-width: 0px;
+          }
+    >
+      <input
+        aria-valuetext="large"
+        className=
+
+            {
+              height: 0px;
+              opacity: 0;
+              pointer-events: none;
+              position: absolute;
+              width: 0px;
+            }
+            &:focus + $endThumb:after {
+              display: block;
+            }
+        max={100}
+        min={0}
+        onChange={[Function]}
+        step={1}
+        type="range"
+        value="80"
+      />
+      <div
+        className=
+
+            {
+              background: #ffffff;
+              border-color: #605e5c;
+              border-radius: 10px;
+              border-style: solid;
+              border-width: 2px;
+              box-sizing: border-box;
+              display: block;
+              height: 16px;
+              margin-top: 2px;
+              outline: transparent;
+              position: relative;
+              transform: translate(-50%,-50%);
+              width: 16px;
+            }
+            &::-moz-focus-inner {
+              border: 0;
+            }
+            .ms-Fabric--isFocusVisible &:after {
+              border: 1px solid #ffffff;
+              bottom: -3px;
+              content: "";
+              left: -3px;
+              outline: 1px solid #605e5c;
+              position: absolute;
+              right: -3px;
+              top: -3px;
+              z-index: 1;
+            }
+            &::after {
+              display: none;
+            }
+            *[dir="rtl"] & {
+              transform: translate(50%,-50%);
+            }
+      />
+    </div>
+    <div
+      className=
+
+          {
+            background-color: #c8c6c4;
+            border-radius: 0px 4px 4px 0px;
+            height: 4px;
+            transition: flex-basis 500ms ease-in-out;
+          }
+      style={
+        Object {
+          "flexBasis": "19.999999999999996%",
+        }
+      }
+    />
   </div>
 </div>
 `;
