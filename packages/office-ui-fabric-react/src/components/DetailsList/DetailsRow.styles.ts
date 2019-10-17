@@ -2,7 +2,6 @@ import { IDetailsRowStyleProps, IDetailsRowStyles, ICellStyleProps } from './Det
 import {
   AnimationClassNames,
   AnimationStyles,
-  FontSizes,
   HighContrastSelector,
   IStyle,
   getFocusStyle,
@@ -11,21 +10,22 @@ import {
 } from '../../Styling';
 import { IsFocusVisibleClassName } from '../../Utilities';
 
-const GlobalClassNames = {
+export const DetailsRowGlobalClassNames = {
   root: 'ms-DetailsRow',
   compact: 'ms-DetailsList--Compact', // TODO: in Fabric 7.0 lowercase the 'Compact' for consistency across other components.
   cell: 'ms-DetailsRow-cell',
   cellAnimation: 'ms-DetailsRow-cellAnimation',
   cellCheck: 'ms-DetailsRow-cellCheck',
+  check: 'ms-DetailsRow-check',
   cellMeasurer: 'ms-DetailsRow-cellMeasurer',
   listCellFirstChild: 'ms-List-cell:first-child',
-  isFocusable: "[data-is-focusable='true']",
   isContentUnselectable: 'is-contentUnselectable',
   isSelected: 'is-selected',
   isCheckVisible: 'is-check-visible',
   isRowHeader: 'is-row-header',
   fields: 'ms-DetailsRow-fields'
 };
+const IsFocusableSelector = "[data-is-focusable='true']";
 
 export const DEFAULT_CELL_STYLE_PROPS: ICellStyleProps = {
   cellLeftPadding: 12,
@@ -61,10 +61,11 @@ export const getStyles = (props: IDetailsRowStyleProps): IDetailsRowStyles => {
     enableUpdateAnimations
   } = props;
 
-  const { neutralPrimary, white, neutralSecondary, neutralLighter, neutralLight, neutralDark, neutralQuaternaryAlt } = theme.palette;
+  const { palette, fonts } = theme;
+  const { neutralPrimary, white, neutralSecondary, neutralLighter, neutralLight, neutralDark, neutralQuaternaryAlt } = palette;
   const { focusBorder } = theme.semanticColors;
 
-  const classNames = getGlobalClassNames(GlobalClassNames, theme);
+  const classNames = getGlobalClassNames(DetailsRowGlobalClassNames, theme);
 
   const colors = {
     // Default
@@ -121,15 +122,11 @@ export const getStyles = (props: IDetailsRowStyleProps): IDetailsRowStyles => {
           color: colors.selectedHoverMetaText,
           selectors: {
             // Selected State hover meta cell
-            [`.${classNames.cell}`]: {
+            [`.${classNames.cell} ${HighContrastSelector}`]: {
+              color: 'HighlightText',
               selectors: {
-                [HighContrastSelector]: {
-                  color: 'HighlightText',
-                  selectors: {
-                    '> a': {
-                      color: 'HighlightText'
-                    }
-                  }
+                '> a': {
+                  color: 'HighlightText'
                 }
               }
             },
@@ -246,7 +243,7 @@ export const getStyles = (props: IDetailsRowStyleProps): IDetailsRowStyles => {
           maxWidth: '100%'
         },
 
-        [classNames.isFocusable!]: getFocusStyle(theme, { inset: -1, borderColor: neutralSecondary, outlineColor: white })
+        [IsFocusableSelector]: getFocusStyle(theme, { inset: -1, borderColor: neutralSecondary, outlineColor: white })
       }
     },
 
@@ -303,11 +300,11 @@ export const getStyles = (props: IDetailsRowStyleProps): IDetailsRowStyles => {
             }
           },
 
-          '&:hover $check': {
+          [`&:hover .${classNames.check}`]: {
             opacity: 1
           },
 
-          [`.${IsFocusVisibleClassName} &:focus $check`]: {
+          [`.${IsFocusVisibleClassName} &:focus .${classNames.check}`]: {
             opacity: 1
           }
         }
@@ -317,21 +314,19 @@ export const getStyles = (props: IDetailsRowStyleProps): IDetailsRowStyles => {
       compact && rootCompactStyles,
       className
     ],
-    cellUnpadded: [
-      {
-        paddingRight: `${cellStyleProps.cellRightPadding}px`
-      }
-    ],
-    cellPadded: [
-      {
-        paddingRight: `${cellStyleProps.cellExtraRightPadding + cellStyleProps.cellRightPadding}px`,
-        selectors: {
-          '&.$checkCell': {
-            paddingRight: 0
-          }
+
+    cellUnpadded: {
+      paddingRight: `${cellStyleProps.cellRightPadding}px`
+    },
+
+    cellPadded: {
+      paddingRight: `${cellStyleProps.cellExtraRightPadding + cellStyleProps.cellRightPadding}px`,
+      selectors: {
+        [`&.${classNames.cellCheck}`]: {
+          paddingRight: 0
         }
       }
-    ],
+    },
 
     cell: defaultCellStyles,
     cellAnimation: enableUpdateAnimations && AnimationStyles.slideLeftIn40,
@@ -356,20 +351,14 @@ export const getStyles = (props: IDetailsRowStyleProps): IDetailsRowStyles => {
         flexShrink: 0
       }
     ],
-    checkCover: [
-      {
-        position: 'absolute',
-        top: -1,
-        left: 0,
-        bottom: 0,
-        right: 0,
-        display: 'none'
-      },
-
-      anySelected && {
-        display: 'block'
-      }
-    ],
+    checkCover: {
+      position: 'absolute',
+      top: -1,
+      left: 0,
+      bottom: 0,
+      right: 0,
+      display: anySelected ? 'block' : 'none'
+    },
     fields: [
       classNames.fields,
       {
@@ -381,7 +370,7 @@ export const getStyles = (props: IDetailsRowStyleProps): IDetailsRowStyles => {
       classNames.isRowHeader,
       {
         color: colors.defaultHeaderText,
-        fontSize: FontSizes.medium
+        fontSize: fonts.medium.fontSize
       },
       isSelected && {
         color: colors.selectedHeaderText,
@@ -401,6 +390,6 @@ export const getStyles = (props: IDetailsRowStyleProps): IDetailsRowStyles => {
         textOverflow: 'clip'
       }
     ],
-    check: []
+    check: [classNames.check]
   };
 };

@@ -16,7 +16,6 @@ exports[`BasePicker renders correctly 1`] = `
     onFocus={[Function]}
     onKeyDown={[Function]}
     onMouseDownCapture={[Function]}
-    role="presentation"
   >
     <div
       className="ms-SelectionZone"
@@ -47,6 +46,7 @@ exports[`BasePicker renders correctly 1`] = `
           onClick={[Function]}
           onCompositionEnd={[Function]}
           onCompositionStart={[Function]}
+          onCompositionUpdate={[Function]}
           onFocus={[Function]}
           onInput={[Function]}
           onKeyDown={[Function]}
@@ -76,7 +76,6 @@ exports[`BasePicker renders with inputProps supply classnames correctly 1`] = `
     onFocus={[Function]}
     onKeyDown={[Function]}
     onMouseDownCapture={[Function]}
-    role="presentation"
   >
     <div
       className="ms-SelectionZone"
@@ -108,6 +107,7 @@ exports[`BasePicker renders with inputProps supply classnames correctly 1`] = `
           onClick={[Function]}
           onCompositionEnd={[Function]}
           onCompositionStart={[Function]}
+          onCompositionUpdate={[Function]}
           onFocus={[Function]}
           onInput={[Function]}
           onKeyDown={[Function]}

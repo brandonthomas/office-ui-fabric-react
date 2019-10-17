@@ -2,7 +2,6 @@ import { IPanelStyleProps, IPanelStyles, PanelType } from './Panel.types';
 import {
   AnimationClassNames,
   AnimationVariables,
-  DefaultFontStyles,
   getGlobalClassNames,
   HighContrastSelector,
   ScreenWidthMinMedium,
@@ -12,7 +11,6 @@ import {
   ScreenWidthMinUhfMobile,
   IStyle
 } from '../../Styling';
-import { FontWeights } from '../../Styling';
 
 // TODO -Issue #5689: Comment in once Button is converted to mergeStyles
 // import { IStyleFunctionOrObject } from '../../Utilities';
@@ -156,17 +154,7 @@ const commandBarHeight = '44px';
 
 const sharedPaddingStyles = {
   paddingLeft: '16px',
-  paddingRight: '16px',
-  selectors: {
-    [`@media screen and (min-width: ${ScreenWidthMinLarge}px)`]: {
-      paddingLeft: '32px',
-      paddingRight: '32px'
-    },
-    [`@media screen and (min-width: ${ScreenWidthMinXXLarge}px)`]: {
-      paddingLeft: '40px',
-      paddingRight: '40px'
-    }
-  }
+  paddingRight: '16px'
 };
 
 // // TODO -Issue #5689: Comment in once Button is converted to mergeStyles
@@ -200,7 +188,7 @@ export const getStyles = (props: IPanelStyleProps): IPanelStyles => {
     theme,
     type = PanelType.smallFixedFar
   } = props;
-  const { palette, effects } = theme;
+  const { palette, effects, fonts } = theme;
   const classNames = getGlobalClassNames(GlobalClassNames, theme);
   const isCustomPanel = type === PanelType.custom || type === PanelType.customNear;
 
@@ -310,7 +298,7 @@ export const getStyles = (props: IPanelStyleProps): IPanelStyles => {
       {
         margin: '14px 0',
         // Ensure that title doesn't shrink if screen is too small
-        flexGrow: 0,
+        flexShrink: 0,
         selectors: {
           [`@media (min-width: ${ScreenWidthMinXLarge}px)`]: {
             marginTop: '30px'
@@ -320,11 +308,9 @@ export const getStyles = (props: IPanelStyleProps): IPanelStyles => {
     ],
     headerText: [
       classNames.headerText,
-      DefaultFontStyles.xLarge,
+      fonts.xLarge,
       {
         color: palette.neutralPrimary,
-        fontSize: 20, // TODO: after the type ramp gets reevaluated this needs to be changed
-        fontWeight: FontWeights.semibold,
         lineHeight: '27px',
         margin: 0,
         overflowWrap: 'break-word',
@@ -355,7 +341,7 @@ export const getStyles = (props: IPanelStyleProps): IPanelStyles => {
       classNames.footer,
       {
         // Ensure that footer doesn't shrink if screen is too small
-        flexGrow: 0,
+        flexShrink: 0,
         borderTop: '1px solid transparent',
         transition: `opacity ${AnimationVariables.durationValue3} ${AnimationVariables.easeFunction2}`
       },

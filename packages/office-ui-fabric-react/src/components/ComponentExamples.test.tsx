@@ -5,7 +5,7 @@ import * as path from 'path';
 
 import { resetIds } from '../Utilities';
 
-import * as DataUtil from '../utilities/exampleData';
+import * as DataUtil from '@uifabric/example-data';
 import * as mergeStylesSerializer from '@uifabric/jest-serializer-merge-styles';
 
 const ReactDOM = require('react-dom');
@@ -129,11 +129,11 @@ describe('Component Examples', () => {
     // Prevent random and time elements from failing repeated tests.
     global.Date = class {
       public static now() {
-        return constantDate;
+        return new realDate(constantDate);
       }
 
       constructor() {
-        return constantDate;
+        return new realDate(constantDate);
       }
     };
 
