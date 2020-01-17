@@ -2,6 +2,48 @@
   "name": "@uifabric/foundation",
   "entries": [
     {
+      "date": "Thu, 16 Jan 2020 12:28:58 GMT",
+      "tag": "@uifabric/foundation_v7.5.1",
+      "version": "7.5.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Upgrade repo to TS3.7.",
+            "author": "jagore@microsoft.com",
+            "commit": "e04fd44af0b978bc0c8c55658bf6b9d0ff3eac49"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Jan 2020 17:02:57 GMT",
+      "tag": "@uifabric/foundation_v7.5.0",
+      "version": "7.5.0",
+      "comments": {
+        "none": [
+          {
+            "comment": "Break up build task into build, bundle, test and lint tasks. Add parallelization pipeline using new tasks.",
+            "author": "jagore@microsoft.com",
+            "commit": "f1f07695f5d18c2c975eef382c5b777d7ccb52e2"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 07 Nov 2019 12:26:32 GMT",
+      "tag": "@uifabric/foundation_v7.5.0",
+      "version": "7.5.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Deprecate IPropsWithChildren type that is redundant with React.PropsWithChildren.",
+            "author": "jagore@microsoft.com",
+            "commit": "94cd8074a7f306c79157de6c1910e9ee31608594"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 03 Oct 2019 23:14:46 GMT",
       "tag": "@uifabric/foundation_v7.4.4",
       "version": "7.4.4",

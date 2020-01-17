@@ -11,7 +11,6 @@ export const controlsPagesAndroid: INavPage[] = [
   },
   {
     title: 'Basic Inputs',
-    url: '#/controls/android/button',
     isCategory: true,
     pages: [
       {
@@ -24,7 +23,6 @@ export const controlsPagesAndroid: INavPage[] = [
   },
   {
     title: 'Pickers',
-    url: '#/controls/android/calendar',
     isCategory: true,
     pages: [
       {
@@ -52,7 +50,6 @@ export const controlsPagesAndroid: INavPage[] = [
   },
   {
     title: 'Items & Lists',
-    url: '#/controls/android/avatar',
     isCategory: true,
     pages: [
       {
@@ -83,8 +80,35 @@ export const controlsPagesAndroid: INavPage[] = [
     ]
   },
   {
+    title: 'Commands, Menus & Navs',
+    isCategory: true,
+    pages: [
+      {
+        title: 'Bottom Navigation',
+        url: '#/controls/android/bottomnavigation',
+        component: () => <LoadingComponent title="Bottom Navigation" />,
+        getComponent: cb =>
+          require.ensure([], require =>
+            cb(require<any>('../../../pages/Controls/BottomNavigationPage/BottomNavigationPage').BottomNavigationPage)
+          )
+      },
+      {
+        title: 'Popup Menu',
+        url: '#/controls/android/popupmenu',
+        component: () => <LoadingComponent title="PopupMenu" />,
+        getComponent: cb =>
+          require.ensure([], require => cb(require<any>('../../../pages/Controls/PopupMenuPage/PopupMenuPage').PopupMenuPage))
+      },
+      {
+        title: 'Top App Bar',
+        url: '#/controls/android/topappbar',
+        component: () => <LoadingComponent title="NavBar" />,
+        getComponent: cb => require.ensure([], require => cb(require<any>('../../../pages/Controls/NavBarPage/NavBarPage').NavBarPage))
+      }
+    ]
+  },
+  {
     title: 'Notification & Engagement',
-    url: '#/controls/android/snackbar',
     isCategory: true,
     pages: [
       {
@@ -98,7 +122,6 @@ export const controlsPagesAndroid: INavPage[] = [
   },
   {
     title: 'Progress',
-    url: '#/controls/android/spinner',
     isCategory: true,
     pages: [
       {
@@ -111,7 +134,6 @@ export const controlsPagesAndroid: INavPage[] = [
   },
   {
     title: 'Surfaces',
-    url: '#/controls/android/bottomsheet',
     isCategory: true,
     pages: [
       {
@@ -128,13 +150,6 @@ export const controlsPagesAndroid: INavPage[] = [
         getComponent: cb => require.ensure([], require => cb(require<any>('../../../pages/Controls/DrawerPage/DrawerPage').DrawerPage))
       },
       {
-        title: 'PopupMenu',
-        url: '#/controls/android/popupmenu',
-        component: () => <LoadingComponent title="PopupMenu" />,
-        getComponent: cb =>
-          require.ensure([], require => cb(require<any>('../../../pages/Controls/PopupMenuPage/PopupMenuPage').PopupMenuPage))
-      },
-      {
         title: 'Tooltip',
         url: '#/controls/android/tooltip',
         component: () => <LoadingComponent title="Tooltip" />,
@@ -144,7 +159,6 @@ export const controlsPagesAndroid: INavPage[] = [
   },
   {
     title: 'Utilities',
-    url: '#/controls/android/separator',
     isCategory: true,
     pages: [
       {

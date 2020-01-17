@@ -188,10 +188,9 @@ exports[`Component Examples renders ContextualMenu.Directional.Example.tsx corre
         Directional hint
       </label>
       <div
-        aria-describedby="Dropdown1-option"
         aria-expanded="false"
         aria-haspopup="listbox"
-        aria-labelledby="Dropdown1-label"
+        aria-labelledby="Dropdown1-label Dropdown1-option"
         className=
             ms-Dropdown
             {
@@ -224,18 +223,26 @@ exports[`Component Examples renders ContextualMenu.Directional.Example.tsx corre
               border-color: Highlight;
             }
             &:focus .ms-Dropdown-title {
-              border-color: #0078d4;
               color: #201f1e;
             }
-            @media screen and (-ms-high-contrast: active){&:focus .ms-Dropdown-title {
+            &:focus:after {
+              border-radius: 2px;
+              border: 2px solid #0078d4;
+              box-sizing: border-box;
+              content: '';
+              height: 100%;
+              left: 0px;
+              pointer-events: none;
+              position: absolute;
+              top: 0px;
+              width: 100%;
+            }
+            @media screen and (-ms-high-contrast: active){&:focus:after {
               background-color: Highlight;
               border-color: Highlight;
               color: HighlightText;
             }
-            @media screen and (-ms-high-contrast: active){&:focus .ms-Dropdown-title:hover {
-              color: HighlightText;
-            }
-            @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: black-on-white){&:focus .ms-Dropdown-title {
+            @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: black-on-white){&:focus:after {
               -ms-high-contrast-adjust: none;
             }
             &:active .ms-Dropdown-title {
@@ -284,16 +291,21 @@ exports[`Component Examples renders ContextualMenu.Directional.Example.tsx corre
         onKeyDown={[Function]}
         onKeyUp={[Function]}
         onMouseDown={[Function]}
-        role="button"
+        role="listbox"
         tabIndex={0}
       >
         <span
+          aria-atomic={true}
           aria-invalid={false}
+          aria-live="polite"
+          aria-posinset={5}
+          aria-selected={true}
+          aria-setsize={14}
           className=
               ms-Dropdown-title
               {
                 background-color: #ffffff;
-                border-color: #8a8886;
+                border-color: #605e5c;
                 border-radius: 2px;
                 border-style: solid;
                 border-width: 1px;
@@ -316,12 +328,10 @@ exports[`Component Examples renders ContextualMenu.Directional.Example.tsx corre
                 text-overflow: ellipsis;
                 white-space: nowrap;
               }
+          id="Dropdown1-option"
+          role="option"
         >
-          <span
-            id="Dropdown1-option"
-          >
-            Bottom Left Edge
-          </span>
+          Bottom Left Edge
         </span>
         <span
           className=
@@ -511,6 +521,11 @@ exports[`Component Examples renders ContextualMenu.Directional.Example.tsx corre
               }
           data-icon-name="ChevronDown"
           role="presentation"
+          style={
+            Object {
+              "fontFamily": "\\"FabricMDL2Icons\\"",
+            }
+          }
         >
           
         </i>

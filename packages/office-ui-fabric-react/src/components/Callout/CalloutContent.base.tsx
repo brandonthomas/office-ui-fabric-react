@@ -321,7 +321,8 @@ export class CalloutContentBase extends React.Component<ICalloutProps, ICalloutS
       (ev.target !== this._targetWindow &&
         isEventTargetOutsideCallout &&
         ((this._target as MouseEvent).stopPropagation ||
-          (!this._target || (target !== this._target && !elementContains(this._target as HTMLElement, target)))))
+          !this._target ||
+          (target !== this._target && !elementContains(this._target as HTMLElement, target))))
     ) {
       this.dismiss(ev);
     }
@@ -499,10 +500,10 @@ export class CalloutContentBase extends React.Component<ICalloutProps, ICalloutS
         const currentDoc: Document = getDocument(currentElement)!;
         this._target = currentDoc ? (currentDoc.querySelector(target) as Element) : null;
         this._targetWindow = getWindow(currentElement)!;
-      } else if ((target as MouseEvent).stopPropagation) {
-        this._targetWindow = getWindow((target as MouseEvent).toElement as HTMLElement)!;
+      } else if (!!(target as MouseEvent).stopPropagation) {
+        this._targetWindow = getWindow((target as MouseEvent).target as HTMLElement)!;
         this._target = target as MouseEvent;
-      } else if ((target as Element).getBoundingClientRect) {
+      } else if (!!(target as Element).getBoundingClientRect) {
         const targetElement: Element = target as Element;
         this._targetWindow = getWindow(targetElement)!;
         this._target = target as Element;

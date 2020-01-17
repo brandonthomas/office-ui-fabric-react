@@ -11,7 +11,6 @@ export const controlsPagesIos: INavPage[] = [
   },
   {
     title: 'Basic Inputs',
-    url: '#/controls/ios/button',
     isCategory: true,
     pages: [
       {
@@ -24,7 +23,6 @@ export const controlsPagesIos: INavPage[] = [
   },
   {
     title: 'Pickers',
-    url: '#/controls/ios/date-time-picker',
     isCategory: true,
     pages: [
       {
@@ -38,7 +36,6 @@ export const controlsPagesIos: INavPage[] = [
   },
   {
     title: 'Items & Lists',
-    url: '#/controls/ios/avatar',
     isCategory: true,
     pages: [
       {
@@ -70,7 +67,6 @@ export const controlsPagesIos: INavPage[] = [
   },
   {
     title: 'Commands, Menus & Navs',
-    url: '#/controls/ios/navigationbar',
     isCategory: true,
     pages: [
       {
@@ -91,14 +87,28 @@ export const controlsPagesIos: INavPage[] = [
         component: () => <LoadingComponent title="Popup Menu" />,
         getComponent: cb =>
           require.ensure([], require => cb(require<any>('../../../pages/Controls/PopupMenuPage/PopupMenuPage').PopupMenuPage))
+      },
+      {
+        title: 'Tab Bar',
+        url: '#/controls/ios/tabbar',
+        component: () => <LoadingComponent title="Tab Bar" />,
+        getComponent: cb =>
+          require.ensure([], require =>
+            cb(require<any>('../../../pages/Controls/BottomNavigationPage/BottomNavigationPage').BottomNavigationPage)
+          )
       }
     ]
   },
   {
     title: 'Progress',
-    url: '#/controls/ios/spinner',
     isCategory: true,
     pages: [
+      {
+        title: 'Shimmer',
+        url: '#/controls/ios/shimmer',
+        component: () => <LoadingComponent title="Shimmer" />,
+        getComponent: cb => require.ensure([], require => cb(require<any>('../../../pages/Controls/ShimmerPage/ShimmerPage').ShimmerPage))
+      },
       {
         title: 'Spinner',
         url: '#/controls/ios/spinner',
@@ -109,7 +119,6 @@ export const controlsPagesIos: INavPage[] = [
   },
   {
     title: 'Surfaces',
-    url: '#/controls/ios/drawer',
     isCategory: true,
     pages: [
       {
@@ -128,7 +137,6 @@ export const controlsPagesIos: INavPage[] = [
   },
   {
     title: 'Utilities',
-    url: '#/controls/ios/separator',
     isCategory: true,
     pages: [
       {

@@ -1,7 +1,31 @@
 # Change Log - @uifabric/monaco-editor
 
-This log was last generated on Fri, 04 Oct 2019 22:19:48 GMT and should not be manually modified.
+This log was last generated on Thu, 16 Jan 2020 12:28:58 GMT and should not be manually modified.
 
+## 0.5.1
+Thu, 16 Jan 2020 12:28:58 GMT
+
+### Patches
+
+- Use standard postprocess task for get/set transforms, and remove readonly parameters (elcraig@microsoft.com)
+## 0.5.0
+Thu, 09 Jan 2020 12:34:52 GMT
+
+### Minor changes
+
+- Update Monaco and fix worker loader in Chrome (elcraig@microsoft.com)
+## 0.4.1
+Wed, 08 Jan 2020 17:02:57 GMT
+
+### Patches
+
+- bumping load-themed-styles to take advantage of es6 version of it (kchau@microsoft.com)
+## 0.4.0
+Mon, 28 Oct 2019 22:25:45 GMT
+
+### Minor changes
+
+- Pick up new Monaco version and try a different cross-domain worker loading method (elcraig@microsoft.com)
 ## 0.3.0
 Fri, 04 Oct 2019 22:19:48 GMT
 
